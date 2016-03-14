@@ -2,6 +2,7 @@
 namespace Vanio\DoctrineGenericTypes\ORM;
 
 use Doctrine\Common\EventSubscriber;
+use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -28,7 +29,7 @@ class GuessTypesOnLoadMetadata implements EventSubscriber
 
             $connection = $event->getEntityManager()->getConnection();
             $typeGuess = $this->typeGuesser->guessType($metadata, $field, $connection->getDatabasePlatform());
-            $metadata->fieldMappings[$field]['type'] = $typeGuess ? $typeGuess->type() : 'string';
+            $metadata->fieldMappings[$field]['type'] = $typeGuess ? $typeGuess->type() : Type::STRING;
             $metadata->fieldMappings[$field]['nullable'] = $typeGuess ? $typeGuess->isNullable() : false;
         }
     }
