@@ -13,7 +13,7 @@ class ClassMetadataTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    function test_type_does_not_have_a_default_value()
+    function test_fields_have_no_default_type()
     {
         $classMetadata = new ClassMetadata('entity');
 
@@ -22,5 +22,12 @@ class ClassMetadataTest extends \PHPUnit_Framework_TestCase
 
         $classMetadata->mapField(['fieldName' => 'bar', 'type' => 'string']);
         $this->assertSame('string', $classMetadata->getTypeOfField('bar'));
+    }
+
+    function test_storing_extra_metadata()
+    {
+        $classMetadata = new ClassMetadata('entity');
+        $classMetadata->extra['foo'] = 'foo';
+        $this->assertSame('foo', unserialize(serialize($classMetadata))->extra['foo']);
     }
 }
