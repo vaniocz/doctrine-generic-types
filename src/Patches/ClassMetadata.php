@@ -9,7 +9,7 @@ class ClassMetadata extends ClassMetadataInfo
      * @param array $mapping
      * @throws MappingException
      */
-    protected function _validateAndCompleteFieldMapping(array &$mapping) // @codingStandardsIgnoreLine
+    protected function _validateAndCompleteFieldMapping(array &$mapping)
     {
         $type = $mapping['type'] ?? null;
         parent::_validateAndCompleteFieldMapping($mapping);
