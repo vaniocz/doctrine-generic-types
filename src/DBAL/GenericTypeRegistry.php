@@ -11,15 +11,11 @@ use Vanio\Stdlib\Objects;
  */
 class GenericTypeRegistry implements \ArrayAccess
 {
-    /** @var array */
+    /** @var array|null */
     private $types;
 
     /** @var bool */
     private $removing = false;
-
-    public function __construct()
-    {
-    }
 
     /**
      * Register itself, hook into Doctrine flyweight system.
