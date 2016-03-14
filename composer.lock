@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b363372e568fbcfebc4e8d1a40d2b047",
-    "content-hash": "d39609079b4d3611375d960be6dedc65",
+    "hash": "d197c6021bb3159c3e810362f894edf1",
+    "content-hash": "1058cb6ce660a29c8aabefe867b8bef6",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -481,13 +481,13 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/maryo/stdlib.git",
-                "reference": "549fcdd4de97fbf3cd80a1fd01194ceb9d8b465c"
+                "url": "https://github.com/vaniocz/stdlib.git",
+                "reference": "8a01504b533cb3912ece8f9183b75f112cd2e499"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maryo/stdlib/zipball/549fcdd4de97fbf3cd80a1fd01194ceb9d8b465c",
-                "reference": "549fcdd4de97fbf3cd80a1fd01194ceb9d8b465c",
+                "url": "https://api.github.com/repos/vaniocz/stdlib/zipball/8a01504b533cb3912ece8f9183b75f112cd2e499",
+                "reference": "8a01504b533cb3912ece8f9183b75f112cd2e499",
                 "shasum": ""
             },
             "require": {
@@ -495,7 +495,7 @@
             },
             "require-dev": {
                 "consistence/coding-standard": "^0.10.1",
-                "phpunit/phpunit": "^5.2",
+                "phpunit/phpunit": "5.2.*",
                 "slevomat/coding-standard": "^1.0.5"
             },
             "type": "library",
@@ -509,48 +509,30 @@
                     "Vanio\\Stdlib\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Vanio\\Stdlib\\Tests\\": "tests/"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "\"vendor/bin/phpunit\" & exit /b 0"
-                ],
-                "lint": [
-                    "\"vendor/bin/phpcs\" --standard=ruleset.xml --extensions=php --encoding=utf-8 -sp src tests & exit /b 0"
-                ],
-                "fix": [
-                    "\"vendor/bin/phpcbf\" --standard=ruleset.xml --extensions=php --encoding=utf-8 --no-patch -sp src tests & exit /b 0"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "authors": [
                 {
-                    "name": "Adam Hojka"
-                },
-                {
                     "name": "Marek Štípek",
                     "email": "marek.stipek@vanio.cz"
+                },
+                {
+                    "name": "Adam Hojka"
                 }
             ],
             "description": "General purpose classes extending the PHP language.",
-            "homepage": "https://github.com/vaniocz/vanio-di-extra-bundle",
+            "homepage": "https://github.com/vaniocz/stdlib",
             "keywords": [
                 "enum",
+                "object utility",
                 "objects",
-                "objects utility",
                 "standard library",
                 "string utility",
                 "strings"
             ],
-            "support": {
-                "source": "https://github.com/maryo/stdlib/tree/master"
-            },
-            "time": "2016-03-14 11:48:21"
+            "time": "2016-03-14 16:54:40"
         },
         {
             "name": "vanio/type-parser",
