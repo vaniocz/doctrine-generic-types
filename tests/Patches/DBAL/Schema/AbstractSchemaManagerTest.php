@@ -31,7 +31,7 @@ class AbstractSchemaManagerTest extends \PHPUnit_Framework_TestCase
         $type = $this->schemaManager->extractDoctrineTypeFromComment('(DC2Type:foo<int, string>)', null);
         $this->assertSame('foo<int, string>', $type);
 
-        $type = $this->schemaManager->extractDoctrineTypeFromComment('(DC2Type:foo@', null);
+        $type = $this->schemaManager->extractDoctrineTypeFromComment('(DC2Type:foo@)', null);
         $this->assertNull($type);
     }
 }
