@@ -34,4 +34,7 @@ foreach (spl_autoload_functions() as $autoloader) {
     }
 
     require $patchedFile;
+    return;
 }
+
+throw new \LogicException(sprintf('Unable to monkey-patch "AbstractSchemaManager".'));
