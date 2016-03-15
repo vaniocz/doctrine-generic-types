@@ -1,5 +1,5 @@
 <?php
-namespace Vanio\DoctrineGenericTypes\Tests\Patches;
+namespace Vanio\DoctrineGenericTypes\Patches\ORM\Mapping;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
 
@@ -8,7 +8,7 @@ class ClassMetadataTest extends \PHPUnit_Framework_TestCase
     function test_patch_is_applied()
     {
         $this->assertSame(
-            realpath(__DIR__ . '/../../src/Patches/ClassMetadata.php'),
+            realpath(__DIR__ . '/../../../../src/Patches/ORM/Mapping/ClassMetadata.php'),
             (new \ReflectionClass(ClassMetadata::class))->getFileName()
         );
     }
