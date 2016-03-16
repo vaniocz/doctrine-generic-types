@@ -3,14 +3,16 @@ namespace Vanio\DoctrineGenericTypes\ORM;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Vanio\DoctrineGenericTypes\TypeGuess;
 
 class TypeGuesserChain implements TypeGuesser
 {
     /** @var TypeGuesser[] */
     private $typeGuessers;
 
-    public function __construct(array $typeGuessers)
+    /**
+     * @param TypeGuesser[] ...$typeGuessers
+     */
+    public function __construct(TypeGuesser ...$typeGuessers)
     {
         $this->typeGuessers = $typeGuessers;
     }

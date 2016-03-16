@@ -35,6 +35,7 @@ class VarAnnotationTypeGuesserTest extends \PHPUnit_Framework_TestCase
     function test_guessing_type(string $property, string $type, bool $nullable)
     {
         $typeGuess = $this->typeGuesser->guessType($this->metadata, $property);
+
         $this->assertInstanceOf(TypeGuess::class, $typeGuess);
         $this->assertSame($type, $typeGuess->type());
         $this->assertSame($nullable, $typeGuess->isNullable());
