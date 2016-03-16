@@ -15,23 +15,24 @@ class AbstractSchemaManagerTest extends \PHPUnit_Framework_TestCase
             ->getMockForAbstractClass();
     }
 
-    function test_patch_is_applied()
+    function test_extracting_type_from_comment()
     {
-        $this->assertStringEndsWith(
-            'DoctrineDBALSchemaAbstractSchemaManager.php',
-            (new \ReflectionClass(AbstractSchemaManager::class))->getFileName()
-        );
-    }
+        $type = $this->schemaManager->extractDoctrineTypeFromComment('(DC2Type:type)', null);
+        $this->assertSame('type', $type);
 
-    function test_it_accepts_generic_types()
-    {
-        $type = $this->schemaManager->extractDoctrineTypeFromComment('(DC2Type:foo)', null);
-        $this->assertSame('foo', $type);
+        $type = $this->schemaManager->extractDoctrineTypeFromComment('(DC2Type:type<string>)', null);
+        $this->assertSame('type<string>', $type);
 
-        $type = $this->schemaManager->extractDoctrineTypeFromComment('(DC2Type:foo<int, string>)', null);
-        $this->assertSame('foo<int, string>', $type);
+        $type = $this->schemaManager->extractDoctrineTypeFromComment('(DC2Type:type<int, string>)', null);
+        $this->assertSame('type<int, string>', $type);
 
-        $type = $this->schemaManager->extractDoctrineTypeFromComment('(DC2Type:foo@)', null);
+        $type = $this->schemaManager->extractDoctrineTypeFromComment('(DC2Type:type<int, string[]>)', null);
+        $this->assertSame('type<int, string[]>', $type);
+
+        $type = $this->schemaManager->extractDoctrineTypeFromComment('(DC2Type:type<int, \stdClass>)', null);
+        $this->assertSame('type<int, \stdClass>', $type);
+
+        $type = $this->schemaManager->extractDoctrineTypeFromComment('(DC2Type:malformed/)', null);
         $this->assertNull($type);
     }
 }

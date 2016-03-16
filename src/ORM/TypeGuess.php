@@ -1,5 +1,5 @@
 <?php
-namespace Vanio\DoctrineGenericTypes;
+namespace Vanio\DoctrineGenericTypes\ORM;
 
 class TypeGuess
 {

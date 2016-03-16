@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e7f08c951ace1c8fa5789ad4acd96b71",
+    "hash": "325d9c2eae5e84eaf19340df01c1730f",
     "content-hash": "1058cb6ce660a29c8aabefe867b8bef6",
     "packages": [
         {
@@ -482,12 +482,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/vaniocz/stdlib.git",
-                "reference": "8a01504b533cb3912ece8f9183b75f112cd2e499"
+                "reference": "0ca7f72f099e5975be029a6ffd7bd6ef71ce4bdc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vaniocz/stdlib/zipball/8a01504b533cb3912ece8f9183b75f112cd2e499",
-                "reference": "8a01504b533cb3912ece8f9183b75f112cd2e499",
+                "url": "https://api.github.com/repos/vaniocz/stdlib/zipball/0ca7f72f099e5975be029a6ffd7bd6ef71ce4bdc",
+                "reference": "0ca7f72f099e5975be029a6ffd7bd6ef71ce4bdc",
                 "shasum": ""
             },
             "require": {
@@ -532,7 +532,7 @@
                 "string utility",
                 "strings"
             ],
-            "time": "2016-03-14 16:54:40"
+            "time": "2016-03-15 18:15:45"
         },
         {
             "name": "vanio/type-parser",
@@ -540,12 +540,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/vaniocz/type-parser.git",
-                "reference": "f22820cef547b001b61af94055f63efb893c1505"
+                "reference": "78607a319a426a0fbb8088ac32b2c7c00fa61eda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vaniocz/type-parser/zipball/f22820cef547b001b61af94055f63efb893c1505",
-                "reference": "f22820cef547b001b61af94055f63efb893c1505",
+                "url": "https://api.github.com/repos/vaniocz/type-parser/zipball/78607a319a426a0fbb8088ac32b2c7c00fa61eda",
+                "reference": "78607a319a426a0fbb8088ac32b2c7c00fa61eda",
                 "shasum": ""
             },
             "require": {
@@ -589,7 +589,7 @@
                 "type resolver",
                 "var"
             ],
-            "time": "2016-03-13 20:11:50"
+            "time": "2016-03-15 18:10:43"
         }
     ],
     "packages-dev": [

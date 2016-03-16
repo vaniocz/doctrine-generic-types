@@ -4,7 +4,6 @@ namespace Vanio\DoctrineGenericTypes\ORM;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Vanio\DoctrineGenericTypes\TypeGuess;
 use Vanio\TypeParser\Parser;
 use Vanio\TypeParser\Type as ParserType;
 
@@ -18,7 +17,6 @@ class VarAnnotationTypeGuesser implements TypeGuesser
         ParserType::FLOAT => Type::FLOAT,
         ParserType::SCALAR => Type::STRING,
         ParserType::ARRAY => Type::TARRAY,
-        ParserType::OBJECT => Type::OBJECT,
     ];
 
     /** @var Parser */
@@ -45,9 +43,11 @@ class VarAnnotationTypeGuesser implements TypeGuesser
             return is_a($type->type(), \DateTimeInterface::class, true)
                 ? new TypeGuess(Type::DATETIME, $type->isNullable())
                 : new TypeGuess(Type::OBJECT, $type->isNullable());
+        } elseif ($typeName = self::$types[$type->type()] ?? null) {
+            return new TypeGuess($typeName, $type->isNullable());
         }
 
-        return self::$types[$type->type()] ?? null;
+        return new TypeGuess(Type::OBJECT, $type->isNullable());
     }
 
     private function guessTypedArray(ParserType $type): TypeGuess

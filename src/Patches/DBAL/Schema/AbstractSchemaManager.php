@@ -1,40 +1,62 @@
 <?php
+// @codeCoverageIgnoreStart
+namespace Vanio\DoctrineGenericTypes\Patches\DBAL\Schema\AbstractSchemaManager;
+
 use Composer\Autoload\ClassLoader;
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 
-const DOCTRINE_PSR4_PREFIX = 'Doctrine\\';
+$directory = sys_get_temp_dir();
+$patchedFile = $directory . '/DoctrineDBALSchemaAbstractSchemaManager.php';
 
-foreach (spl_autoload_functions() as $autoloader) {
-    if (!is_array($autoloader)) {
-        continue;
+if (!is_readable($patchedFile)) {
+    $code = str_replace(
+        '"(\(DC2Type:([a-zA-Z0-9_]+)\))"',
+        '"(\(DC2Type:([a-zA-Z0-9_\x7f-\xff\\\\\[\]<>, ]+)\))"',
+        file_get_contents(find_psr0_class_file(AbstractSchemaManager::class, 'Doctrine\\'))
+    );
+
+    if (!@file_put_contents($patchedFile, $code)) {
+        eval('?>' . $code);
+
+        return;
+    }
+}
+
+require $patchedFile;
+
+/**
+ * Finds a file using PSR0 while resetting composer PSR4 prefix this patch was loaded by.
+ *
+ * @param string $class
+ * @param string $psr4Prefix
+ * @return string
+ */
+function find_psr0_class_file(string $class, string $psr4Prefix): string
+{
+    $classLoader = get_class_loader();
+    $paths = $classLoader->getPrefixesPsr4()[$psr4Prefix] ?? [];
+    $classLoader->setPsr4($psr4Prefix, []);
+
+    if (!$file = $classLoader->findFile($class)) {
+        throw new \LogicException(sprintf('The class "%s" file was not found.', $class));
     }
 
-    $autoloader = current($autoloader);
+    $classLoader->setPsr4($psr4Prefix, $paths);
 
-    if (!$autoloader instanceof ClassLoader) {
-        continue;
-    }
+    return $file;
+}
 
-    $paths = $autoloader->getPrefixesPsr4()[DOCTRINE_PSR4_PREFIX] ?? [];
-    $autoloader->setPsr4(DOCTRINE_PSR4_PREFIX, []);
-    $originalFile = $autoloader->findFile(AbstractSchemaManager::class);
-    $autoloader->setPsr4(DOCTRINE_PSR4_PREFIX, $paths);
-    $code = file_get_contents($originalFile);
-    $code = str_replace('"(\(DC2Type:([a-zA-Z0-9_]+)\))"', '"(\(DC2Type:([a-zA-Z0-9_<>, ]+)\))"', $code);
-    $directory = sys_get_temp_dir();
-    $patchedFile = $directory . '/DoctrineDBALSchemaAbstractSchemaManager.php';
+function get_class_loader(): ClassLoader
+{
+    foreach (spl_autoload_functions() as $autoloadFunction) {
+        if (is_array($autoloadFunction)) {
+            $autoloadFunction = current($autoloadFunction);
 
-    if (!is_file($patchedFile)) {
-        if (is_writable($directory)) {
-            file_put_contents($patchedFile, $code);
-        } else {
-            eval(sprintf('?>%s', $code));
-            return;
+            if ($autoloadFunction instanceof ClassLoader) {
+                return $autoloadFunction;
+            }
         }
     }
 
-    require $patchedFile;
-    return;
+    throw new \LogicException('Composer autoloader must be registered.');
 }
-
-throw new \LogicException(sprintf('Unable to monkey-patch "AbstractSchemaManager".'));

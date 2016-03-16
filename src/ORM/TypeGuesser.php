@@ -3,7 +3,6 @@ namespace Vanio\DoctrineGenericTypes\ORM;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Vanio\DoctrineGenericTypes\TypeGuess;
 
 interface TypeGuesser
 {
