@@ -540,12 +540,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/vaniocz/type-parser.git",
-                "reference": "78607a319a426a0fbb8088ac32b2c7c00fa61eda"
+                "reference": "247156853d25e973285f29e677e2920cf92d90f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vaniocz/type-parser/zipball/78607a319a426a0fbb8088ac32b2c7c00fa61eda",
-                "reference": "78607a319a426a0fbb8088ac32b2c7c00fa61eda",
+                "url": "https://api.github.com/repos/vaniocz/type-parser/zipball/247156853d25e973285f29e677e2920cf92d90f5",
+                "reference": "247156853d25e973285f29e677e2920cf92d90f5",
                 "shasum": ""
             },
             "require": {
@@ -589,7 +589,7 @@
                 "type resolver",
                 "var"
             ],
-            "time": "2016-03-15 18:10:43"
+            "time": "2016-03-21 00:28:27"
         }
     ],
     "packages-dev": [
@@ -1822,28 +1822,29 @@
         },
         {
             "name": "slevomat/coding-standard",
-            "version": "1.0.5",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/slevomat/coding-standard.git",
-                "reference": "c117fe1638d2085c33b1a129ac7cbb08de93a608"
+                "reference": "52692292a7c21a81862785e889266334b4dfdb43"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/c117fe1638d2085c33b1a129ac7cbb08de93a608",
-                "reference": "c117fe1638d2085c33b1a129ac7cbb08de93a608",
+                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/52692292a7c21a81862785e889266334b4dfdb43",
+                "reference": "52692292a7c21a81862785e889266334b4dfdb43",
                 "shasum": ""
             },
             "require": {
                 "jakub-onderka/php-parallel-lint": "~0.8",
-                "php": "^5.6|^7.0"
+                "php": "^5.6|^7.0",
+                "squizlabs/php_codesniffer": "^2.5.0"
             },
             "require-dev": {
-                "consistence/coding-standard": "^0.10",
+                "consistence/coding-standard": "^0.10.1",
                 "phing/phing": "^2.9",
                 "phpstan/phpstan": "dev-dev#1cb3904e17",
                 "phpunit/phpunit": "^5.0",
-                "satooshi/php-coveralls": "dev-master"
+                "satooshi/php-coveralls": "^1.0"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -1851,7 +1852,7 @@
                 "MIT"
             ],
             "description": "Slevomat Coding Standard for PHP_CodeSniffer extends Consistence Coding Standard by providing sniffs with additional checks.",
-            "time": "2016-01-06 20:00:22"
+            "time": "2016-03-18 09:40:44"
         },
         {
             "name": "squizlabs/php_codesniffer",

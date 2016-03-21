@@ -1,46 +1,106 @@
 <?php
 namespace Vanio\DoctrineGenericTypes\Tests\Fixtures;
 
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ */
 class Entity
 {
-    /** @var string */
+    /**
+     * @var string
+     * @ORM\Column
+     * @ORM\Id
+     */
     public $string;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     * @ORM\Column
+     */
     public $nullableString;
 
-    /** @var int|string */
+    /**
+     * @var int|string
+     * @ORM\Column
+     */
     public $scalar;
 
-    /** @var object */
+    /**
+     * @var object
+     * @ORM\Column
+     */
     public $object;
 
-    /** @var \stdClass */
+    /**
+     * @var \stdClass
+     * @ORM\Column
+     */
     public $stdClass;
 
-    /** @var \DateTime */
+    /**
+     * @var \DateTime
+     * @ORM\Column
+     */
     public $dateTime;
 
-    /** @var array */
+    /**
+     * @var array
+     * @ORM\Column
+     */
     public $array;
 
-    /** @var string[] */
+    /**
+     * @var string[]
+     * @ORM\Column
+     */
     public $arrayOfStrings;
 
-    /** @var scalar[] */
+    /**
+     * @var scalar[]
+     * @ORM\Column
+     */
     public $arrayOfScalars;
 
-    /** @var object[] */
+    /**
+     * @var object[]
+     * @ORM\Column
+     */
     public $arrayOfObjects;
 
-    /** @var \ArrayIterator<\stdClass> */
+    /**
+     * @var \ArrayIterator<\stdClass>
+     * @ORM\Column
+     */
     public $genericType;
 
-    /** @var \ArrayIterator<int, string> */
+    /**
+     * @var \ArrayIterator<int, string>
+     * @ORM\Column
+     */
     public $genericTypeWithScalarParameterTypes;
 
-    /** @var mixed */
+    /**
+     * @var mixed
+     * @ORM\Column
+     */
     public $mixed;
 
+    /**
+     * @var int
+     * @ORM\Column(type="string")
+     */
+    public $alreadyString;
+
+    /**
+     * @var string
+     * @ORM\Column(nullable=true)
+     */
+    public $stringAlreadyNullable;
+
+    /**
+     * @ORM\Column
+     */
     public $notGuessable;
 }

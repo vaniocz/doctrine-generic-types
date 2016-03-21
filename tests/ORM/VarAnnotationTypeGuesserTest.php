@@ -6,10 +6,7 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Vanio\DoctrineGenericTypes\ORM\TypeGuess;
 use Vanio\DoctrineGenericTypes\ORM\VarAnnotationTypeGuesser;
 use Vanio\DoctrineGenericTypes\Tests\Fixtures\Entity;
-use Vanio\TypeParser\TypeContextFactory;
 use Vanio\TypeParser\TypeParser;
-use Vanio\TypeParser\TypeResolver;
-use Vanio\TypeParser\UseStatementsParser;
 
 class VarAnnotationTypeGuesserTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,9 +18,11 @@ class VarAnnotationTypeGuesserTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $typeParser = new TypeParser(new TypeResolver, new TypeContextFactory(new UseStatementsParser));
+        $typeParser = new TypeParser;
         $this->typeGuesser = new VarAnnotationTypeGuesser($typeParser);
         $this->metadata = new ClassMetadata(Entity::class);
+        $this->metadata->mapField(['fieldName' => 'alreadyString', 'type' => 'string']);
+        $this->metadata->mapField(['fieldName' => 'stringAlreadyNullable', 'nullable' => true]);
     }
 
     /**
@@ -62,6 +61,8 @@ class VarAnnotationTypeGuesserTest extends \PHPUnit_Framework_TestCase
             ['genericType', Type::OBJECT, false],
             ['genericTypeWithScalarParameterTypes', Type::OBJECT, false],
             ['mixed', Type::OBJECT, true],
+            ['alreadyString', Type::INTEGER, false],
+            ['stringAlreadyNullable', Type::STRING, false],
         ];
     }
 }

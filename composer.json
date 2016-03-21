@@ -10,12 +10,11 @@
     ],
     "require": {
         "php": ">=7.0",
-        "doctrine/dbal": "^2.5",
+        "doctrine/orm": "^2.5",
         "vanio/stdlib": "dev-master",
         "vanio/type-parser": "dev-master"
     },
     "require-dev": {
-        "doctrine/orm": "^2.5",
         "phpunit/phpunit": "^5.2",
         "consistence/coding-standard": "^0.10.1",
         "slevomat/coding-standard": "^1.0.5"
