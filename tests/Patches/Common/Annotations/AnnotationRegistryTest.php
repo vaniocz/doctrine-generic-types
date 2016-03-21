@@ -18,11 +18,11 @@ class AnnotationRegistryTest extends \PHPUnit_Framework_TestCase
 
         $directory = dirname((new \ReflectionClass(Entity::class))->getFileName());
         AnnotationRegistry::registerFile($directory . '/Driver/DoctrineAnnotations.php');
-        AnnotationRegistry::registerFile($directory . '\Driver\DoctrineAnnotations.php');
+        AnnotationRegistry::registerFile($directory . '/Driver/DoctrineAnnotations.php');
         AnnotationRegistry::registerFile($directory . '/Column.php');
-        AnnotationRegistry::registerFile($directory . '\Column.php');
-        AnnotationRegistry::registerFile($directory . '\Entity.php');
-        AnnotationRegistry::registerFile($directory . '\Entity.php');
+        AnnotationRegistry::registerFile($directory . '/Column.php');
+        AnnotationRegistry::registerFile($directory . '/Entity.php');
+        AnnotationRegistry::registerFile($directory . '/Entity.php');
 
         $this->assertTrue(class_exists(Column::class, false));
         $this->assertTrue(class_exists(Entity::class, false));
