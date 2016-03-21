@@ -12,7 +12,8 @@ if (!is_readable($patchedFile)) {
         '~function\s+registerFile\s*\(.*\)\s*{~',
         sprintf(
             '
-                function registerFile($file) {
+                function registerFile($file)
+                {
                     $file = str_replace("\\\\\", "/", realpath($file));
 
                     if (\Vanio\Stdlib\Strings::endsWith($file, "/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php")) {

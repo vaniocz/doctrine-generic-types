@@ -11,7 +11,8 @@ if (!is_readable($patchedFile)) {
     $code = preg_replace(
         '~function\s+extractDoctrineTypeFromComment\s*\(.*\)\s*{~',
         '
-            function extractDoctrineTypeFromComment($comment, $currentType) {
+            function extractDoctrineTypeFromComment($comment, $currentType)
+            {
                 return preg_match("~\(DC2Type:([a-zA-Z0-9_\x7f-\xff\\\\\\\\\[\]<>, ]+)\)~", $comment, $matches)
                     ? $matches[1]
                     : $currentType;
