@@ -7,7 +7,6 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Vanio\DoctrineGenericTypes\ORM\GuessTypesOnLoadMetadata;
 use Vanio\DoctrineGenericTypes\ORM\VarAnnotationTypeGuesser;

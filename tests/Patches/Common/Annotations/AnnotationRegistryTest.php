@@ -2,8 +2,8 @@
 namespace Vanio\DoctrineGenericTypes\Patches\Common\Annotations;
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
-use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
 
 class AnnotationRegistryTest extends \PHPUnit_Framework_TestCase
 {

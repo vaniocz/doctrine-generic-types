@@ -9,7 +9,6 @@ class ComposerUtility
      * Finds a file using PSR0 while resetting composer PSR4 prefix this patch was loaded by.
      *
      * @param string $class
-     * @param string $psr4Prefix
      * @return string
      * @throws \LogicException
      */
