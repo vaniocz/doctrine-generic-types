@@ -1,7 +1,7 @@
 {
     "name": "vanio/doctrine-generic-types",
     "description": "An extension for Doctrine2 DBAL allowing usage of generic types",
-    "keywords": ["doctrine", "doctrine2", "dbal", "generics", "generic types"],
+    "keywords": ["doctrine", "doctrine2", "generics", "generic types"],
     "type": "library",
     "homepage": "https://github.com/vaniocz/doctrine-generic-types",
     "license": "MIT",
