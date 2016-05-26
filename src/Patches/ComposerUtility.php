@@ -2,6 +2,7 @@
 namespace Vanio\DoctrineGenericTypes\Patches;
 
 use Composer\Autoload\ClassLoader;
+use Symfony\Component\Debug\DebugClassLoader;
 
 class ComposerUtility
 {
@@ -37,6 +38,10 @@ class ComposerUtility
         foreach (spl_autoload_functions() as $autoloadFunction) {
             if (is_array($autoloadFunction)) {
                 $autoloadFunction = current($autoloadFunction);
+
+                if ($autoloadFunction instanceof DebugClassLoader) {
+                    $autoloadFunction = current($autoloadFunction->getClassLoader());
+                }
 
                 if ($autoloadFunction instanceof ClassLoader) {
                     return $autoloadFunction;
