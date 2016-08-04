@@ -23,7 +23,7 @@
         "psr-4": {
             "Vanio\\DoctrineGenericTypes\\": "src/",
             "Doctrine\\": "src/Patches/"
-        }
+        },
         "exclude-from-classmap": ["/tests/"]
     },
     "autoload-dev": {
