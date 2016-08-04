@@ -27,7 +27,7 @@
         "exclude-from-classmap": ["/tests/"]
     },
     "autoload-dev": {
-        "psr-4": { "Vanio\\DoctrineGenericTypes\\Tests\\": "tests/" }
+        "psr-4": {"Vanio\\DoctrineGenericTypes\\Tests\\": "tests/"}
     },
     "scripts": {
         "test": "\"vendor/bin/phpunit\"",
