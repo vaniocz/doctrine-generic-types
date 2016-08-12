@@ -51,11 +51,11 @@ class GuessTypesOnLoadMetadataTest extends \PHPUnit_Framework_TestCase
         $config->setProxyDir(__DIR__);
         $config->setProxyNamespace(__NAMESPACE__ . '\Proxy');
         /** @var Driver|\PHPUnit_Framework_MockObject_MockObject $driver */
-        $driver = $this->getMock(Driver::class);
+        $driver = $this->createMock(Driver::class);
         $driver
             ->expects($this->any())
             ->method('getDatabasePlatform')
-            ->willReturn($this->getMock(AbstractPlatform::class));
+            ->willReturn($this->createMock(AbstractPlatform::class));
         $connection = new Connection([], $driver, $config);
         $config->setMetadataDriverImpl(AnnotationDriver::create());
 

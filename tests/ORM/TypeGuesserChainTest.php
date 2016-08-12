@@ -23,14 +23,14 @@ class TypeGuesserChainTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->notGuessingTypeGuesser = $this->getMock(TypeGuesser::class);
+        $this->notGuessingTypeGuesser = $this->createMock(TypeGuesser::class);
         $this->notGuessingTypeGuesser->expects($this->any())->method('guessType')->willReturn(null);
-        $this->stringGuessingTypeGuesser = $this->getMock(TypeGuesser::class);
+        $this->stringGuessingTypeGuesser = $this->createMock(TypeGuesser::class);
         $this->stringGuessingTypeGuesser
             ->expects($this->any())
             ->method('guessType')
             ->willReturn(new TypeGuess(Type::STRING));
-        $this->integerGuessingTypeGuesser = $this->getMock(TypeGuesser::class);
+        $this->integerGuessingTypeGuesser = $this->createMock(TypeGuesser::class);
         $this->integerGuessingTypeGuesser
             ->expects($this->any())
             ->method('guessType')

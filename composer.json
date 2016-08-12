@@ -15,7 +15,7 @@
         "vanio/type-parser": "dev-master"
     },
     "require-dev": {
-        "phpunit/phpunit": "^5.2",
+        "phpunit/phpunit": "^5.5",
         "consistence/coding-standard": "^0.10.1",
         "slevomat/coding-standard": "^1.0.5"
     },

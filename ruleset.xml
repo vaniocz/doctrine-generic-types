@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
-<ruleset name="Vanio Ruleset">
+<ruleset name="Vanio Doctrine Generic Types Ruleset">
     <rule ref="vendor/consistence/coding-standard/Consistence/ruleset.xml">
         <exclude name="Generic.WhiteSpace.DisallowSpaceIndent"/>
         <exclude name="Generic.WhiteSpace.ScopeIndent"/>
         <exclude name="PEAR.WhiteSpace.ObjectOperatorIndent"/> <!-- because of deep tree structures -->
+        <exclude name="PSR2.Methods.MethodDeclaration.Underscore"/> <!-- because of ClassMetadata::_validateAndCompleteFieldMapping -->
         <exclude name="Squiz.ControlStructures.ControlSignature"/> <!-- {} is allowed -->
         <exclude name="Squiz.WhiteSpace.MemberVarSpacing"/>
         <exclude name="Squiz.WhiteSpace.FunctionSpacing.Before"/>

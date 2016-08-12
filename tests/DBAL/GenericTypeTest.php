@@ -34,7 +34,7 @@ class GenericTypeTest extends \PHPUnit_Framework_TestCase
 
     function test_it_requires_sql_comment_hint()
     {
-        $platform = $this->getMock(AbstractPlatform::class);
+        $platform = $this->createMock(AbstractPlatform::class);
         /** @var AbstractPlatform|\PHPUnit_Framework_MockObject_MockObject $platform */
         $this->assertTrue(BarType::create()->requiresSQLCommentHint($platform));
     }
