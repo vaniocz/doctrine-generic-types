@@ -2,7 +2,6 @@
     "name": "vanio/doctrine-generic-types",
     "description": "An extension for Doctrine2 DBAL allowing usage of generic types",
     "keywords": ["doctrine", "doctrine2", "generics", "generic types"],
-    "type": "library",
     "homepage": "https://github.com/vaniocz/doctrine-generic-types",
     "license": "MIT",
     "authors": [
@@ -11,13 +10,12 @@
     "require": {
         "php": ">=7.0",
         "doctrine/orm": "^2.5",
-        "vanio/stdlib": "dev-master",
-        "vanio/type-parser": "dev-master"
+        "vanio/stdlib": "^0.1@dev",
+        "vanio/type-parser": "^0.1@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.5",
-        "consistence/coding-standard": "^0.10.1",
-        "slevomat/coding-standard": "^1.0.5"
+        "vanio/coding-standards": "^0.1@dev"
     },
     "autoload": {
         "psr-4": {
@@ -31,8 +29,8 @@
     },
     "scripts": {
         "test": "\"vendor/bin/phpunit\"",
-        "lint": "\"vendor/bin/phpcs\" --standard=ruleset.xml --extensions=php --encoding=utf-8 -sp src tests",
-        "fix": "\"vendor/bin/phpcbf\" --standard=ruleset.xml --extensions=php --encoding=utf-8 --no-patch -sp src tests"
+        "lint": "\"vendor/bin/phpcs\" --standard=ruleset.xml --extensions=php --encoding=utf-8 --ignore=vendor .",
+        "fix": "\"vendor/bin/phpcbf\" --standard=ruleset.xml --extensions=php --encoding=utf-8 --no-patch --ignore=vendor ."
     },
     "extra": {
         "branch-alias": {
