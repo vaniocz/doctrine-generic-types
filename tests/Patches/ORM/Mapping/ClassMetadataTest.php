@@ -2,8 +2,9 @@
 namespace Vanio\DoctrineGenericTypes\Patches\ORM\Mapping;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
+use PHPUnit\Framework\TestCase;
 
-class ClassMetadataTest extends \PHPUnit_Framework_TestCase
+class ClassMetadataTest extends TestCase
 {
     function test_patch_is_applied()
     {

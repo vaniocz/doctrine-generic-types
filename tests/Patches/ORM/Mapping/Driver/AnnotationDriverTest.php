@@ -3,9 +3,10 @@ namespace Vanio\DoctrineGenericTypes\Patches\ORM\Mapping;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use PHPUnit\Framework\TestCase;
 use Vanio\DoctrineGenericTypes\Tests\Fixtures\Entity;
 
-class AnnotationDriverTest extends \PHPUnit_Framework_TestCase
+class AnnotationDriverTest extends TestCase
 {
     function test_loading_metadata_for_class()
     {

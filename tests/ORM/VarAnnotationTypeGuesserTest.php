@@ -3,12 +3,13 @@ namespace Vanio\DoctrineGenericTypes\Tests;
 
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use PHPUnit\Framework\TestCase;
 use Vanio\DoctrineGenericTypes\ORM\TypeGuess;
 use Vanio\DoctrineGenericTypes\ORM\VarAnnotationTypeGuesser;
 use Vanio\DoctrineGenericTypes\Tests\Fixtures\Entity;
 use Vanio\TypeParser\TypeParser;
 
-class VarAnnotationTypeGuesserTest extends \PHPUnit_Framework_TestCase
+class VarAnnotationTypeGuesserTest extends TestCase
 {
     /** @var VarAnnotationTypeGuesser */
     private $typeGuesser;
@@ -26,7 +27,7 @@ class VarAnnotationTypeGuesserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider provideTypeGuesses
+     * @dataProvider typeGuesses
      * @param string $property
      * @param string $type
      * @param bool $nullable
@@ -45,7 +46,7 @@ class VarAnnotationTypeGuesserTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->typeGuesser->guessType($this->metadata, 'notGuessable'));
     }
 
-    public function provideTypeGuesses(): array
+    public function typeGuesses(): array
     {
         return [
             ['string', Type::STRING, false],

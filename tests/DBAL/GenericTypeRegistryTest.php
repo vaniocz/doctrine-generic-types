@@ -3,18 +3,20 @@ namespace Vanio\DoctrineGenericTypes\Tests\DBAL;
 
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Types\Type;
+use PHPUnit\Framework\TestCase;
 use Vanio\DoctrineGenericTypes\DBAL\GenericType;
 use Vanio\DoctrineGenericTypes\DBAL\GenericTypeRegistry;
 use Vanio\DoctrineGenericTypes\Tests\Fixtures\BarType;
 use Vanio\DoctrineGenericTypes\Tests\Fixtures\FooType;
 
-class GenericTypeRegistryTest extends \PHPUnit_Framework_TestCase
+class GenericTypeRegistryTest extends TestCase
 {
     /** @var GenericTypeRegistry */
     private $typeRegistry;
 
     protected function setUp()
     {
+        /** @noinspection PhpInternalEntityUsedInspection */
         $this->typeRegistry = new GenericTypeRegistry;
     }
 

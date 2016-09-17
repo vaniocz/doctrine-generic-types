@@ -3,11 +3,12 @@ namespace Vanio\DoctrineGenericTypes\Tests;
 
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use PHPUnit\Framework\TestCase;
 use Vanio\DoctrineGenericTypes\ORM\TypeGuess;
 use Vanio\DoctrineGenericTypes\ORM\TypeGuesser;
 use Vanio\DoctrineGenericTypes\ORM\TypeGuesserChain;
 
-class TypeGuesserChainTest extends \PHPUnit_Framework_TestCase
+class TypeGuesserChainTest extends TestCase
 {
     /** @var TypeGuesser */
     private $notGuessingTypeGuesser;

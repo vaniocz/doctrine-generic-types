@@ -8,12 +8,13 @@ use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use PHPUnit\Framework\TestCase;
 use Vanio\DoctrineGenericTypes\ORM\GuessTypesOnLoadMetadata;
 use Vanio\DoctrineGenericTypes\ORM\VarAnnotationTypeGuesser;
 use Vanio\DoctrineGenericTypes\Tests\Fixtures\Entity;
 use Vanio\TypeParser\TypeParser;
 
-class GuessTypesOnLoadMetadataTest extends \PHPUnit_Framework_TestCase
+class GuessTypesOnLoadMetadataTest extends TestCase
 {
     /** @var EntityManager */
     private static $entityManager;
@@ -31,7 +32,7 @@ class GuessTypesOnLoadMetadataTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider provideTypeGuesses
+     * @dataProvider typeGuesses
      * @param string $property
      * @param string $type
      * @param bool $nullable
@@ -62,7 +63,7 @@ class GuessTypesOnLoadMetadataTest extends \PHPUnit_Framework_TestCase
         return EntityManager::create($connection, $config);
     }
 
-    public function provideTypeGuesses(): array
+    public function typeGuesses(): array
     {
         return [
             ['string', Type::STRING, false],

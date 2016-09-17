@@ -2,8 +2,9 @@
 namespace Vanio\DoctrineGenericTypes\Patches\DBAL\Schema;
 
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
+use PHPUnit\Framework\TestCase;
 
-class AbstractSchemaManagerTest extends \PHPUnit_Framework_TestCase
+class AbstractSchemaManagerTest extends TestCase
 {
     /** @var AbstractSchemaManager|\PHPUnit_Framework_MockObject_MockObject */
     private $schemaManager;

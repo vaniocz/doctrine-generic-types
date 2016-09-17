@@ -3,8 +3,9 @@ namespace Vanio\DoctrineGenericTypes\Patches\ORM\Mapping;
 
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
+use PHPUnit\Framework\TestCase;
 
-class DoctrineAnnotationsTest extends \PHPUnit_Framework_TestCase
+class DoctrineAnnotationsTest extends TestCase
 {
     /**
      * @runInSeparateProcess

@@ -1,9 +1,10 @@
 <?php
 namespace Vanio\DoctrineGenericTypes\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Vanio\DoctrineGenericTypes\ORM\TypeGuess;
 
-class TypeGuessTest extends \PHPUnit_Framework_TestCase
+class TypeGuessTest extends TestCase
 {
     function test_type_can_be_obtained()
     {

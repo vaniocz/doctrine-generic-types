@@ -2,11 +2,12 @@
 namespace Vanio\DoctrineGenericTypes\Patches\DBAL\Schema;
 
 use Doctrine\DBAL\SQLParserUtils;
+use PHPUnit\Framework\TestCase;
 
-class SQLParserUtilsTest extends \PHPUnit_Framework_TestCase
+class SQLParserUtilsTest extends TestCase
 {
     /**
-     * @dataProvider providePlaceholderPositions
+     * @dataProvider placeholderPositions
      * @param string $query
      * @param bool $isPositional
      * @param array $placeholderPositions
@@ -16,7 +17,7 @@ class SQLParserUtilsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($placeholderPositions, SQLParserUtils::getPlaceholderPositions($query, $isPositional));
     }
 
-    public function providePlaceholderPositions(): array
+    public function placeholderPositions(): array
     {
         return [
             // None

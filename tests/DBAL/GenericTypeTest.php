@@ -2,9 +2,10 @@
 namespace Vanio\DoctrineGenericTypes\Tests;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
+use PHPUnit\Framework\TestCase;
 use Vanio\DoctrineGenericTypes\Tests\Fixtures\BarType;
 
-class GenericTypeTest extends \PHPUnit_Framework_TestCase
+class GenericTypeTest extends TestCase
 {
     function test_it_can_be_instantiated()
     {

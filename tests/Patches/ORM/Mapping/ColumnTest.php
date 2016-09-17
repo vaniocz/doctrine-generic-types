@@ -2,8 +2,9 @@
 namespace Vanio\DoctrineGenericTypes\Patches\ORM\Mapping;
 
 use Doctrine\ORM\Mapping\Column;
+use PHPUnit\Framework\TestCase;
 
-class ColumnTest extends \PHPUnit_Framework_TestCase
+class ColumnTest extends TestCase
 {
     function test_patch_is_applied()
     {
