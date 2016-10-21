@@ -4,27 +4,44 @@ namespace Vanio\DoctrineGenericTypes\ORM;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Vanio\DoctrineGenericTypes\DBAL\UniversalJsonType;
 use Vanio\TypeParser\Parser;
 use Vanio\TypeParser\Type as ParserType;
 
 class VarAnnotationTypeGuesser implements TypeGuesser
 {
+    /** @var Parser */
+    private $typeParser;
+
     /** @var string[] */
-    private static $types = [
+    private $types = [
         ParserType::STRING => Type::STRING,
         ParserType::INTEGER => Type::INTEGER,
         ParserType::BOOLEAN => Type::BOOLEAN,
         ParserType::FLOAT => Type::FLOAT,
         ParserType::SCALAR => Type::STRING,
-        ParserType::ARRAY => Type::TARRAY,
     ];
 
-    /** @var Parser */
-    private $typeParser;
+    /** @var string[] */
+    private $classes = [
+        \DateTimeImmutable::class => 'datetime_immutable',
+        \DateTimeInterface::class => Type::DATETIME,
+        'Ramsey\Uuid\UuidInterface' => 'uuid',
+    ];
 
     public function __construct(Parser $typeParser)
     {
         $this->typeParser = $typeParser;
+    }
+
+    public function registerType(string $parserType, string $doctrineType)
+    {
+        $this->types[$parserType] = $doctrineType;
+    }
+
+    public function registerClass(string $class, string $doctrineType)
+    {
+        $this->classes[$class] = $doctrineType;
     }
 
     /**
@@ -40,21 +57,23 @@ class VarAnnotationTypeGuesser implements TypeGuesser
         } elseif ($type->isGeneric() && $type->type() === ParserType::ARRAY) {
             return $this->guessTypedArray($type);
         } elseif ($type->isTypedObject()) {
-            return is_a($type->type(), \DateTimeInterface::class, true)
-                ? new TypeGuess(Type::DATETIME, $type->isNullable())
-                : new TypeGuess(Type::OBJECT, $type->isNullable());
-        } elseif ($typeName = self::$types[$type->type()] ?? null) {
-            return new TypeGuess($typeName, $type->isNullable());
+            foreach ($this->classes as $class => $doctrineType) {
+                if (Type::hasType($doctrineType) && ($type->type() === $class || is_a($type->type(), $class, true))) {
+                    return new TypeGuess($doctrineType, $type->isNullable());
+                }
+            }
+        } elseif ($doctrineType = $this->types[$type->type()] ?? null) {
+            return new TypeGuess($doctrineType, $type->isNullable());
         }
 
-        return new TypeGuess(Type::OBJECT, $type->isNullable());
+        return new TypeGuess(UniversalJsonType::NAME, $type->isNullable());
     }
 
     private function guessTypedArray(ParserType $type): TypeGuess
     {
         foreach ($type->typeParameters() as $typeParameter) {
             if (!$typeParameter->isScalar()) {
-                return new TypeGuess(Type::TARRAY);
+                return new TypeGuess(UniversalJsonType::NAME, $type->isNullable());
             }
         }
 

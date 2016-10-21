@@ -4,6 +4,7 @@ namespace Vanio\DoctrineGenericTypes\Tests;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use PHPUnit\Framework\TestCase;
+use Vanio\DoctrineGenericTypes\DBAL\UniversalJsonType;
 use Vanio\DoctrineGenericTypes\ORM\TypeGuess;
 use Vanio\DoctrineGenericTypes\ORM\VarAnnotationTypeGuesser;
 use Vanio\DoctrineGenericTypes\Tests\Fixtures\Entity;
@@ -52,16 +53,15 @@ class VarAnnotationTypeGuesserTest extends TestCase
             ['string', Type::STRING, false],
             ['nullableString', Type::STRING, true],
             ['scalar', Type::STRING, false],
-            ['object', Type::OBJECT, false],
-            [\stdClass::class, Type::OBJECT, false],
-            [\stdClass::class, Type::OBJECT, false],
+            ['object', UniversalJsonType::NAME, false],
+            [\stdClass::class, UniversalJsonType::NAME, false],
             ['dateTime', Type::DATETIME, false],
             ['arrayOfStrings', Type::JSON_ARRAY, false],
             ['arrayOfScalars', Type::JSON_ARRAY, false],
-            ['arrayOfObjects', Type::TARRAY, false],
-            ['genericType', Type::OBJECT, false],
-            ['genericTypeWithScalarParameterTypes', Type::OBJECT, false],
-            ['mixed', Type::OBJECT, true],
+            ['arrayOfObjects', UniversalJsonType::NAME, false],
+            ['genericType', UniversalJsonType::NAME, false],
+            ['genericTypeWithScalarParameterTypes', UniversalJsonType::NAME, false],
+            ['mixed', UniversalJsonType::NAME, true],
             ['alreadyString', Type::INTEGER, false],
             ['stringAlreadyNullable', Type::STRING, false],
         ];

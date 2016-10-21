@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="vanio_doctrine_generic_types.orm.guess_types_on_load_metadata.class">Vanio\DoctrineGenericTypes\ORM\GuessTypesOnLoadMetadata</parameter>
+        <parameter key="vanio_doctrine_generic_types.orm.type_guesser_chain.class">Vanio\DoctrineGenericTypes\ORM\TypeGuesserChain</parameter>
+        <parameter key="vanio_doctrine_generic_types.orm.var_annotation_type_guesser.class">Vanio\DoctrineGenericTypes\ORM\VarAnnotationTypeGuesser</parameter>
+        <parameter key="vanio_doctrine_generic_types.orm.scalar_object_type_guesser.class">Vanio\DoctrineGenericTypes\ORM\ScalarObjectTypeGuesser</parameter>
+    </parameters>
+
+    <services>
+        <service id="vanio_doctrine_generic_types.orm.guess_types_on_load_metadata" class="%vanio_doctrine_generic_types.orm.guess_types_on_load_metadata.class%" public="false">
+            <argument type="service" id="vanio_doctrine_generic_types.orm.type_guesser_chain"/>
+            <tag name="doctrine.event_subscriber"/>
+        </service>
+
+        <service id="vanio_doctrine_generic_types.orm.type_guesser_chain" class="%vanio_doctrine_generic_types.orm.type_guesser_chain.class%" public="false"/>
+
+        <service id="vanio_doctrine_generic_types.orm.var_annotation_type_guesser" class="%vanio_doctrine_generic_types.orm.var_annotation_type_guesser.class%" public="false">
+            <argument type="service" id="vanio_type_parser.parser"/>
+            <tag name="vanio_doctrine_generic_types.type_guesser" priority="-999"/>
+        </service>
+
+        <service id="vanio_doctrine_generic_types.orm.scalar_object_type_guesser" class="%vanio_doctrine_generic_types.orm.scalar_object_type_guesser.class%" public="false">
+            <argument type="service" id="vanio_type_parser.parser"/>
+            <tag name="vanio_doctrine_generic_types.type_guesser"/>
+        </service>
+    </services>
+</container>

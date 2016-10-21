@@ -29,7 +29,16 @@ class GuessTypesOnLoadMetadata implements EventSubscriber
 
             $connection = $event->getEntityManager()->getConnection();
             $typeGuess = $this->typeGuesser->guessType($metadata, $field, $connection->getDatabasePlatform());
-            $metadata->fieldMappings[$field]['type'] = $typeGuess ? $typeGuess->type() : Type::STRING;
+
+            if (!$typeGuess) {
+                $type = Type::STRING;
+            } elseif ($typeGuess->typeParameters()) {
+                $type = sprintf('%s<%s>', $typeGuess->type(), implode(', ', $typeGuess->typeParameters()));
+            } else {
+                $type = $typeGuess->type();
+            }
+
+            $metadata->fieldMappings[$field]['type'] = $type;
             $metadata->fieldMappings[$field]['nullable'] = $metadata->getFieldMapping($field)['nullable'] ??
                 ($typeGuess ? $typeGuess->isNullable() : false);
         }

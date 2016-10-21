@@ -32,6 +32,8 @@ abstract class GenericType extends Type
             : $this->name();
     }
 
+    abstract public function name(): string;
+
     /**
      * @return string[]
      */
@@ -44,6 +46,4 @@ abstract class GenericType extends Type
     {
         return true;
     }
-
-    abstract protected function name(): string;
 }
