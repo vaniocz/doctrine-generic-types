@@ -44,11 +44,9 @@ class GenericTypeRegistry implements \ArrayAccess
     /**
      * Get an instance of the given type name
      *
-     * @param string $type
-     * @return Type
      * @throws DBALException
      */
-    public function getType(string $type)
+    public function getType(string $type): Type
     {
         if (isset($this->types[$type])) {
             return $this->types[$type];
@@ -64,7 +62,6 @@ class GenericTypeRegistry implements \ArrayAccess
     /**
      * Register the given type instance
      *
-     * @param Type $type
      * @throws DBALException
      */
     public function addType(Type $type)
@@ -80,8 +77,6 @@ class GenericTypeRegistry implements \ArrayAccess
 
     /**
      * Unregister the given type
-     *
-     * @param string $type
      */
     public function removeType(string $type)
     {
@@ -140,8 +135,6 @@ class GenericTypeRegistry implements \ArrayAccess
     }
 
     /**
-     * @param string $type
-     * @return Type
      * @throws DBALException
      */
     private function createType(string $type): Type

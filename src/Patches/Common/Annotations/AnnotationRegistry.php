@@ -1,5 +1,5 @@
 <?php // @codeCoverageIgnoreStart
-namespace Vanio\DoctrineGenericTypes\Patches\Common\Anotations;
+namespace Vanio\DoctrineGenericTypes\Patches\Common\Annotations;
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Vanio\DoctrineGenericTypes\Patches\ComposerUtility;

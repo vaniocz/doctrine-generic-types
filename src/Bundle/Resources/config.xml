@@ -5,6 +5,7 @@
         <parameter key="vanio_doctrine_generic_types.orm.type_guesser_chain.class">Vanio\DoctrineGenericTypes\ORM\TypeGuesserChain</parameter>
         <parameter key="vanio_doctrine_generic_types.orm.var_annotation_type_guesser.class">Vanio\DoctrineGenericTypes\ORM\VarAnnotationTypeGuesser</parameter>
         <parameter key="vanio_doctrine_generic_types.orm.scalar_object_type_guesser.class">Vanio\DoctrineGenericTypes\ORM\ScalarObjectTypeGuesser</parameter>
+        <parameter key="vanio_doctrine_generic_types.bundle.form.scalar_object_type_guesser.class">Vanio\DoctrineGenericTypes\Bundle\Form\ScalarObjectTypeGuesser</parameter>
     </parameters>
 
     <services>
@@ -23,6 +24,11 @@
         <service id="vanio_doctrine_generic_types.orm.scalar_object_type_guesser" class="%vanio_doctrine_generic_types.orm.scalar_object_type_guesser.class%" public="false">
             <argument type="service" id="vanio_type_parser.parser"/>
             <tag name="vanio_doctrine_generic_types.type_guesser"/>
+        </service>
+
+        <service id="vanio_doctrine_generic_types.bundle.form.scalar_object_type_guesser" class="%vanio_doctrine_generic_types.bundle.form.scalar_object_type_guesser.class%">
+            <argument type="service" id="vanio_type_parser.parser"/>
+            <tag name="form.type_guesser"/>
         </service>
     </services>
 </container>

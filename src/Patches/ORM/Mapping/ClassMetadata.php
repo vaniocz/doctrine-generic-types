@@ -19,7 +19,6 @@ class ClassMetadata extends ClassMetadataInfo
     }
 
     /**
-     * @param array $mapping
      * @throws MappingException
      */
     protected function _validateAndCompleteFieldMapping(array &$mapping)

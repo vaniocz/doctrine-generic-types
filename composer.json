@@ -17,6 +17,7 @@
         "phpunit/phpunit": "^5.5",
         "symfony/dependency-injection": "^3.0",
         "symfony/config": "^3.0",
+        "symfony/form": "^3.0",
         "symfony/http-kernel": "^3.0",
         "vanio/coding-standards": "^0.1@dev"
     },
@@ -25,6 +26,7 @@
             "Vanio\\DoctrineGenericTypes\\": "src/",
             "Doctrine\\": "src/Patches/"
         },
+        "files": ["src/Patches/Common/Annotations/AnnotationRegistry.php"],
         "exclude-from-classmap": ["/tests/"]
     },
     "autoload-dev": {

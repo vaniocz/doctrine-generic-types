@@ -9,8 +9,6 @@ class ComposerUtility
     /**
      * Finds a file using PSR0 while resetting composer PSR4 prefix this patch was loaded by.
      *
-     * @param string $class
-     * @return string
      * @throws \LogicException
      */
     public static function findClassFileUsingPsr0(string $class): string
@@ -30,7 +28,6 @@ class ComposerUtility
     }
 
     /**
-     * @return ClassLoader
      * @throws \LogicException
      */
     public static function getClassLoader(): ClassLoader
