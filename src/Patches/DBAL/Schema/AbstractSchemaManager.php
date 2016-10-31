@@ -1,7 +1,6 @@
 <?php // @codeCoverageIgnoreStart
-namespace Vanio\DoctrineGenericTypes\Patches\DBAL\Schema;
+namespace Doctrine\DBAL\Schema;
 
-use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Vanio\DoctrineGenericTypes\Patches\ComposerUtility;
 
 $originalFile = ComposerUtility::findClassFileUsingPsr0(AbstractSchemaManager::class);

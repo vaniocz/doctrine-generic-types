@@ -1,7 +1,6 @@
 <?php // @codeCoverageIgnoreStart
-namespace Vanio\DoctrineGenericTypes\Patches\DBAL\Platforms;
+namespace Doctrine\DBAL\Platforms;
 
-use Doctrine\DBAL\Platforms\SQLAnywherePlatform;
 use Vanio\DoctrineGenericTypes\Patches\ComposerUtility;
 
 $originalFile = ComposerUtility::findClassFileUsingPsr0(SQLAnywherePlatform::class);

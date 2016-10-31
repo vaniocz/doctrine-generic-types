@@ -1,7 +1,6 @@
 <?php // @codeCoverageIgnoreStart
-namespace Vanio\DoctrineGenericTypes\Patches\DBAL;
+namespace Doctrine\DBAL;
 
-use Doctrine\DBAL\SQLParserUtils;
 use Vanio\DoctrineGenericTypes\Patches\ComposerUtility;
 
 $originalFile = ComposerUtility::findClassFileUsingPsr0(SQLParserUtils::class);

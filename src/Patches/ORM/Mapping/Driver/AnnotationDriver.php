@@ -12,6 +12,14 @@ if (!is_readable($patchedFile)) {
         '',
         file_get_contents($originalFile)
     );
+    $code = preg_replace(
+        '~\$mapping\[\'columnPrefix\'\]\s*=\s*(\$embeddedAnnot)->columnPrefix~',
+        '
+           $mapping[\'columnPrefix\'] = $1->columnPrefix;
+           $mapping[\'nullable\'] = $1->nullable;
+        ',
+        $code
+    );
 
     if (!@file_put_contents($patchedFile, $code)) {
         eval('?>' . $code);

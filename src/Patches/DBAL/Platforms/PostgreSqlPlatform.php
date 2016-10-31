@@ -1,7 +1,6 @@
 <?php // @codeCoverageIgnoreStart
-namespace Vanio\DoctrineGenericTypes\Patches\DBAL\Platforms;
+namespace Doctrine\DBAL\Platforms;
 
-use Doctrine\DBAL\Platforms\PostgreSqlPlatform;
 use Vanio\DoctrineGenericTypes\Patches\ComposerUtility;
 
 $originalFile = ComposerUtility::findClassFileUsingPsr0(PostgreSqlPlatform::class);

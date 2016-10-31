@@ -1,7 +1,6 @@
 <?php // @codeCoverageIgnoreStart
-namespace Vanio\DoctrineGenericTypes\Patches\Common\Annotations;
+namespace Doctrine\Common\Annotations;
 
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use Vanio\DoctrineGenericTypes\Patches\ComposerUtility;
 
 $originalFile = ComposerUtility::findClassFileUsingPsr0(AnnotationRegistry::class);
