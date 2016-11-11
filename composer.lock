@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "41141b88dea2816a6be131296d67fc09",
+    "hash": "00c954530c34bf1755e7b0f24ffe3c3d",
     "content-hash": "6ca6f015892d7bb9888d204c8df3fb17",
     "packages": [
         {
@@ -836,12 +836,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/vaniocz/stdlib.git",
-                "reference": "fe8d6fb58ec46aacaa8a261d99956745499849fb"
+                "reference": "857654ec0ef3cc3009d245fcc94ccb3c8c49f54a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vaniocz/stdlib/zipball/fe8d6fb58ec46aacaa8a261d99956745499849fb",
-                "reference": "fe8d6fb58ec46aacaa8a261d99956745499849fb",
+                "url": "https://api.github.com/repos/vaniocz/stdlib/zipball/857654ec0ef3cc3009d245fcc94ccb3c8c49f54a",
+                "reference": "857654ec0ef3cc3009d245fcc94ccb3c8c49f54a",
                 "shasum": ""
             },
             "require": {
@@ -890,7 +890,7 @@
                 "strings",
                 "uri value object"
             ],
-            "time": "2016-10-21 15:27:42"
+            "time": "2016-11-11 13:33:33"
         },
         {
             "name": "vanio/type-parser",
@@ -1107,16 +1107,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.3",
+            "version": "v2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "c0125896dbb151380ab47e96c621741e79623beb"
+                "reference": "a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/c0125896dbb151380ab47e96c621741e79623beb",
-                "reference": "c0125896dbb151380ab47e96c621741e79623beb",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e",
+                "reference": "a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e",
                 "shasum": ""
             },
             "require": {
@@ -1151,7 +1151,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-10-17 15:23:22"
+            "time": "2016-11-07 23:38:38"
         },
         {
             "name": "phpdocumentor/reflection-common",

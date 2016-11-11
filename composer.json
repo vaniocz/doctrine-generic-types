@@ -20,9 +20,13 @@
         "vanio/coding-standards": "^0.1@dev"
     },
     "autoload": {
+        "psr-0": {
+            "Doctrine\\Common\\Annotations\\": "vendor/doctrine/annotations/lib/"
+        },
         "psr-4": {
-            "Vanio\\DoctrineGenericTypes\\": "src/",
-            "Doctrine\\": "src/Patches/"
+            "Doctrine\\": "src/Patches/",
+            "Doctrine\\Common\\Annotations\\": "src/Patches/Common/Annotations/",
+            "Vanio\\DoctrineGenericTypes\\": "src/"
         },
         "exclude-from-classmap": ["/tests/"]
     },
