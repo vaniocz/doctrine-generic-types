@@ -24,7 +24,6 @@
             "Vanio\\DoctrineGenericTypes\\": "src/",
             "Doctrine\\": "src/Patches/"
         },
-        "files": ["src/Patches/Common/Annotations/AnnotationRegistry.php"],
         "exclude-from-classmap": ["/tests/"]
     },
     "autoload-dev": {
