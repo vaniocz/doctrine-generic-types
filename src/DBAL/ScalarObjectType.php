@@ -23,9 +23,6 @@ class ScalarObjectType extends GenericType
     }
 
     /**
-     * Converts a value from its database representation to its PHP representation
-     * of this type.
-     *
      * @param mixed $value
      * @param AbstractPlatform $platform
      * @return ScalarObject|null
@@ -38,7 +35,7 @@ class ScalarObjectType extends GenericType
 
         $class = $this->scalarObjectClass();
 
-        return new $class($value);
+        return is_callable([$class, 'create']) ? $class::create($value) : new $class($value);
     }
 
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
