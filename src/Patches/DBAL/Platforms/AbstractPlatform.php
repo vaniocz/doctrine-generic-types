@@ -27,6 +27,10 @@ if (!is_readable($patchedFile)) {
         '
             function isCommentedDoctrineType(\Doctrine\DBAL\Types\Type $doctrineType)
             {
+                if ($this->doctrineTypeComments === null) {
+                    $this->initializeCommentedDoctrineTypes();
+                }
+
                 $typeName = $doctrineType instanceof \Vanio\DoctrineGenericTypes\DBAL\GenericType
                     ? $doctrineType->name()
                     : $doctrineType->getName();

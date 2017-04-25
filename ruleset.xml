@@ -1,6 +1,15 @@
 <?xml version="1.0"?>
 <ruleset name="Vanio Doctrine Generic Types Ruleset">
     <rule ref="vendor/vanio/coding-standards/ruleset.xml">
+        <exclude name="SlevomatCodingStandard.Classes.ClassConstantVisibility"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue"/>
         <exclude name="PSR2.Methods.MethodDeclaration.Underscore"/> <!-- because of ClassMetadata::_validateAndCompleteFieldMapping -->
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration">
+        <properties>
+            <property name="enableNullableTypeHints" value="false"/>
+            <property name="enableVoidTypeHint" value="false"/>
+        </properties>
     </rule>
 </ruleset>
