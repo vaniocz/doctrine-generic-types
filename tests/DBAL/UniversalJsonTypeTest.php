@@ -1,6 +1,7 @@
 <?php
 namespace Vanio\DoctrineGenericTypes\Tests;
 
+use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Platforms\PostgreSQL92Platform;
 use Doctrine\DBAL\Types\Type;
 use PHPUnit\Framework\TestCase;
@@ -83,7 +84,7 @@ class UniversalJsonTypeTest extends TestCase
             [['foo' => 'foo']],
             [new \stdClass],
             [new \DateTime],
-            [$this],
+            [DriverManager::getConnection(['driver' => 'pdo_mysql'])],
         ];
     }
 }
