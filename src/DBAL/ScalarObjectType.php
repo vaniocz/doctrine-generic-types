@@ -38,7 +38,7 @@ class ScalarObjectType extends GenericType
         return is_callable([$class, 'create']) ? $class::create($value) : new $class($value);
     }
 
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
         $class = $this->scalarObjectClass();
 

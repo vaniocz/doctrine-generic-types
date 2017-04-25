@@ -15,6 +15,11 @@ class UniversalJsonType extends Type
         return $platform->getJsonTypeDeclarationSQL($fieldDeclaration);
     }
 
+    /**
+     * @param mixed $value
+     * @param AbstractPlatform $platform
+     * @return mixed
+     */
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
         return $value === null

@@ -12,4 +12,16 @@
             <property name="enableVoidTypeHint" value="false"/>
         </properties>
     </rule>
+
+    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint">
+        <exclude-pattern>src/Bundle/Form/ScalarObjectType.php</exclude-pattern>
+        <exclude-pattern>src/Bundle/Form/ScalarObjectTypeGuesser.php</exclude-pattern>
+        <exclude-pattern>src/DBAL/GenericTypeRegistry.php</exclude-pattern>
+        <exclude-pattern>src/DBAL/ScalarObjectType.php</exclude-pattern>
+        <exclude-pattern>src/Patches/ORM/Mapping/ClassMetadata.php</exclude-pattern>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingPropertyTypeHint">
+        <exclude-pattern>tests/Fixtures/Entity.php</exclude-pattern>
+    </rule>
 </ruleset>

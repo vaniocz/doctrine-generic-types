@@ -66,6 +66,11 @@ class ClassMetadata extends ClassMetadataInfo
         }
     }
 
+    /**
+     * @param string $field
+     * @param mixed $value
+     * @return bool
+     */
     private function shouldPopulateField(string $field, $value): bool
     {
         if (!isset($this->fieldMappings[$field])) {
