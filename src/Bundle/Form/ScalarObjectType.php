@@ -17,7 +17,10 @@ class ScalarObjectType extends AbstractType implements DataMapperInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('value', $this->resolveInnerType($options['data_class']), $options['options']);
+        $builder->add('value', $options['type'], $options['options'] + [
+            'required' => true,
+            'label' => false,
+        ]);
         $builder->setDataMapper($this);
     }
 
@@ -28,10 +31,7 @@ class ScalarObjectType extends AbstractType implements DataMapperInterface
                 'empty_data' => null,
                 'error_bubbling' => false,
                 'type' => null,
-                'options' => [
-                    'required' => true,
-                    'label' => false,
-                ],
+                'options' => [],
             ])
             ->setAllowedTypes('type', ['string', 'null'])
             ->setAllowedTypes('options', 'array')
