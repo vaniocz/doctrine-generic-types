@@ -12,7 +12,14 @@ class ScalarObjectParamConverter implements ParamConverterInterface
     {
         $class = $configuration->getClass();
         $value = $request->attributes->get($configuration->getName());
-        $request->attributes->set($configuration->getName(), new $class($value));
+
+        if ($value === null && $configuration->isOptional()) {
+            $scalarObject = null;
+        } else {
+            $scalarObject = is_callable([$class, 'create']) ? $class::create($value) : new $class($value);
+        }
+
+        $request->attributes->set($configuration->getName(), $scalarObject);
 
         return true;
     }
