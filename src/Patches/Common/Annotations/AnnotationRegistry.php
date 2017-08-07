@@ -8,10 +8,10 @@ $patchedFile = sprintf('%s/AnnotationRegistry_%s_%s.php', sys_get_temp_dir(), md
 
 if (!is_readable($patchedFile)) {
     $code = preg_replace(
-        '~function\s+registerFile\s*\(.*\)\s*{~',
+        '~function\s+registerFile\s*\(.*\)\s*(:(?:.*))?\s*{~',
         sprintf(
             '
-                function registerFile($file)
+                function registerFile($file)$1
                 {
                     $file = str_replace("\\\\\", "/", realpath($file));
 
