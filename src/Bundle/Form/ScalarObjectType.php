@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vanio\DoctrineGenericTypes\DBAL\ScalarObject;
@@ -36,6 +37,11 @@ class ScalarObjectType extends AbstractType implements DataMapperInterface
             ->setAllowedTypes('type', ['string', 'null'])
             ->setAllowedTypes('options', 'array')
             ->setNormalizer('type', $this->typeNormalizer());
+    }
+
+    public function finishView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['dataClass'] = $options['data_class'];
     }
 
     /**
