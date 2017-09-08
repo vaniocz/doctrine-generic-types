@@ -13,13 +13,13 @@ class ScalarObjectType extends GenericType
     }
 
     /**
-     * @param ScalarObject|null $value
+     * @param mixed $value
      * @param AbstractPlatform $platform
      * @return mixed
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
-        return $value ? $value->scalarValue() : null;
+        return $value instanceof ScalarObject ? $value->scalarValue() : $value;
     }
 
     /**
