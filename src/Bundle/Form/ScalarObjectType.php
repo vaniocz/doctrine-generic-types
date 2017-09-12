@@ -8,6 +8,8 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
@@ -18,11 +20,13 @@ class ScalarObjectType extends AbstractType implements DataMapperInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('value', $options['type'], $options['options'] + [
-            'required' => true,
-            'label' => false,
-        ]);
-        $builder->setDataMapper($this);
+        $builder
+            ->setDataMapper($this)
+            ->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'onPreSetData'])
+            ->add('value', $options['type'], $options['options'] + [
+                'required' => true,
+                'label' => false,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -68,13 +72,21 @@ class ScalarObjectType extends AbstractType implements DataMapperInterface
         $class = $form->getParent()->getConfig()->getOption('data_class');
 
         if ($form->getData() !== null || $form->getParent()->isRequired()) {
-            $data = new $class($form->getData());
+            $data = $this->createScalarObject($class, $form->getData());
         }
     }
 
-    public function getName(): string
+    /**
+     * @internal
+     */
+    public function onPreSetData(FormEvent $event)
     {
-        return 'scalar_object';
+        $data = $event->getData();
+        $class = $event->getForm()->getConfig()->getOption('data_class');
+
+        if ($data !== null && !$data instanceof ScalarObject) {
+            $event->setData($this->createScalarObject($class, $data));
+        }
     }
 
     private function typeNormalizer(): \Closure
@@ -107,5 +119,15 @@ class ScalarObjectType extends AbstractType implements DataMapperInterface
         }
 
         return TextType::class;
+    }
+
+    /**
+     * @param string $class
+     * @param mixed $value
+     * @return ScalarObject
+     */
+    private function createScalarObject(string $class, $value): ScalarObject
+    {
+        return is_callable([$class, 'create']) ? $class::{'create'}($value) : new $class($value);
     }
 }
