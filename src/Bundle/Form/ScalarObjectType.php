@@ -70,10 +70,9 @@ class ScalarObjectType extends AbstractType implements DataMapperInterface
         /** @var FormInterface $form */
         $form = reset($forms);
         $class = $form->getParent()->getConfig()->getOption('data_class');
-
-        if ($form->getData() !== null || $form->getParent()->isRequired()) {
-            $data = $this->createScalarObject($class, $form->getData());
-        }
+        $data = $form->getData() !== null || $form->getParent()->isRequired()
+            ? $this->createScalarObject($class, $form->getData())
+            : null;
     }
 
     /**
