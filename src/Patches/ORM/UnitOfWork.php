@@ -12,6 +12,21 @@ if (!is_readable($patchedFile)) {
         '$class->populateEntity($entity, $data);',
         file_get_contents($originalFile)
     );
+    $code = preg_replace(
+        '~case\s*\(\$targetClass->subClasses\):.+?default:~s',
+        '
+            case ($targetClass->subClasses):
+                if (in_array($targetClass->discriminatorColumn["name"], $targetClass->identifier) && isset($associatedId[$targetClass->discriminatorColumn["name"]])) {
+                    $discriminator = $associatedId[$targetClass->discriminatorColumn["fieldName"]];
+                    $assoc["targetEntity"] = $targetClass->discriminatorMap[$discriminator];
+                } else {
+                    $newValue = $this->getEntityPersister($assoc["targetEntity"])->loadOneToOneEntity($assoc, $entity, $associatedId);
+                    break;
+                }
+            default:
+        ',
+        $code
+    );
 
     if (!@file_put_contents($patchedFile, $code)) {
         eval('?>' . $code);

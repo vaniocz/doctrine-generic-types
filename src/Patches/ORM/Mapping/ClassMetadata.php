@@ -5,6 +5,7 @@ namespace Doctrine\ORM\Mapping;
  * - Allows adding extra metadata attributes @see http://www.doctrine-project.org/jira/browse/DDC-3391
  * - Removes type default value (string), keeps null in that case so type guessing makes more sense.
  * - Handles embedded nullable mappings.
+ * - Allows to map discriminator fields
  */
 class ClassMetadata extends ClassMetadataInfo
 {
@@ -59,7 +60,10 @@ class ClassMetadata extends ClassMetadataInfo
     protected function _validateAndCompleteFieldMapping(array &$mapping)
     {
         $type = $mapping['type'] ?? null;
+        $discriminatorColumn = $this->discriminatorColumn;
+        $this->discriminatorColumn = null;
         parent::_validateAndCompleteFieldMapping($mapping);
+        $this->discriminatorColumn = $discriminatorColumn;
 
         if (!$type) {
             $mapping['type'] = null;
