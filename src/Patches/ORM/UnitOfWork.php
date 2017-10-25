@@ -16,9 +16,8 @@ if (!is_readable($patchedFile)) {
         '~case\s*\(\$targetClass->subClasses\):.+?default:~s',
         '
             case ($targetClass->subClasses):
-                if (in_array($targetClass->discriminatorColumn["name"], $targetClass->identifier) && isset($associatedId[$targetClass->discriminatorColumn["name"]])) {
-                    $discriminator = $associatedId[$targetClass->discriminatorColumn["fieldName"]];
-                    $assoc["targetEntity"] = $targetClass->discriminatorMap[$discriminator];
+                if ($targetClass->identifierDiscriminatorField !== null && isset($associatedId[$targetClass->identifierDiscriminatorField])) {
+                    $assoc["targetEntity"] = $targetClass->discriminatorMap[$associatedId[$targetClass->identifierDiscriminatorField]];
                 } else {
                     $newValue = $this->getEntityPersister($assoc["targetEntity"])->loadOneToOneEntity($assoc, $entity, $associatedId);
                     break;

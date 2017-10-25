@@ -20,8 +20,8 @@ class AssignedGenerator extends AbstractIdGenerator
         $classMetadata = $entityManager->getClassMetadata(get_class($entity));
         $id = [];
 
-        foreach ($classMetadata->getIdentifierFieldNames() as $field) {
-            $value = $classMetadata->discriminatorColumn && $field === $classMetadata->discriminatorColumn['fieldName']
+        foreach ($classMetadata->identifier as $field) {
+            $value = $field === $classMetadata->identifierDiscriminatorField
                 ? $classMetadata->discriminatorValue
                 : $classMetadata->getFieldValue($entity, $field);
 

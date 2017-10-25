@@ -12,6 +12,15 @@ class ClassMetadata extends ClassMetadataInfo
     /** @var array */
     public $extra = [];
 
+    /** @var string|null */
+    public $identifierDiscriminatorField;
+
+    public function setIdentifier(array $identifier)
+    {
+        parent::setIdentifier($identifier);
+        $this->completeIdentifierDiscriminatorField();
+    }
+
     public function mapEmbedded(array $mapping)
     {
         parent::mapEmbedded($mapping);
@@ -50,13 +59,11 @@ class ClassMetadata extends ClassMetadataInfo
     {
         $serialized = parent::__sleep();
         $serialized[] = 'extra';
+        $serialized[] = 'identifierDiscriminatorField';
 
         return $serialized;
     }
 
-    /**
-     * @throws MappingException
-     */
     protected function _validateAndCompleteFieldMapping(array &$mapping)
     {
         $type = $mapping['type'] ?? null;
@@ -64,10 +71,19 @@ class ClassMetadata extends ClassMetadataInfo
         $this->discriminatorColumn = null;
         parent::_validateAndCompleteFieldMapping($mapping);
         $this->discriminatorColumn = $discriminatorColumn;
+        $this->completeIdentifierDiscriminatorField();
 
         if (!$type) {
             $mapping['type'] = null;
         }
+    }
+
+    protected function _validateAndCompleteAssociationMapping(array $mapping): array
+    {
+        $mapping = parent::_validateAndCompleteAssociationMapping($mapping);
+        $this->completeIdentifierDiscriminatorField();
+
+        return $mapping;
     }
 
     /**
@@ -86,5 +102,17 @@ class ClassMetadata extends ClassMetadataInfo
         }
 
         return ($this->embeddedClasses[$property]['nullable'] ?? false) !== true;
+    }
+
+    private function completeIdentifierDiscriminatorField()
+    {
+        if (
+            $this->identifierDiscriminatorField === null
+            && isset($this->discriminatorColumn['fieldName'])
+            && $this->isIdentifierComposite
+            && in_array($this->discriminatorColumn['fieldName'], $this->identifier)
+        ) {
+            $this->identifierDiscriminatorField = $this->discriminatorColumn['fieldName'];
+        }
     }
 }
