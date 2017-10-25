@@ -13,10 +13,10 @@ if (!is_readable($patchedFile)) {
         file_get_contents($originalFile)
     );
     $code = preg_replace(
-        '~\$mapping\[\'columnPrefix\'\]\s*=\s*(\$embeddedAnnot)->columnPrefix~',
+        '~\$mapping\[\'columnPrefix\'\]\s*=\s*\$embeddedAnnot->columnPrefix~',
         '
-           $mapping[\'columnPrefix\'] = $1->columnPrefix;
-           $mapping[\'nullable\'] = $1->nullable;
+           $mapping["columnPrefix"] = $embeddedAnnot->columnPrefix;
+           $mapping["nullable"] = $embeddedAnnot->nullable;
         ',
         $code
     );

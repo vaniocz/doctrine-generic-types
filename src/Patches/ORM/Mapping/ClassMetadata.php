@@ -18,7 +18,7 @@ class ClassMetadata extends ClassMetadataInfo
     public function setIdentifier(array $identifier)
     {
         parent::setIdentifier($identifier);
-        $this->completeIdentifierDiscriminatorField();
+        $this->assignIdentifierDiscriminatorField();
     }
 
     public function mapEmbedded(array $mapping)
@@ -71,7 +71,7 @@ class ClassMetadata extends ClassMetadataInfo
         $this->discriminatorColumn = null;
         parent::_validateAndCompleteFieldMapping($mapping);
         $this->discriminatorColumn = $discriminatorColumn;
-        $this->completeIdentifierDiscriminatorField();
+        $this->assignIdentifierDiscriminatorField();
 
         if (!$type) {
             $mapping['type'] = null;
@@ -81,7 +81,7 @@ class ClassMetadata extends ClassMetadataInfo
     protected function _validateAndCompleteAssociationMapping(array $mapping): array
     {
         $mapping = parent::_validateAndCompleteAssociationMapping($mapping);
-        $this->completeIdentifierDiscriminatorField();
+        $this->assignIdentifierDiscriminatorField();
 
         return $mapping;
     }
@@ -104,7 +104,7 @@ class ClassMetadata extends ClassMetadataInfo
         return ($this->embeddedClasses[$property]['nullable'] ?? false) !== true;
     }
 
-    private function completeIdentifierDiscriminatorField()
+    private function assignIdentifierDiscriminatorField()
     {
         if (
             $this->identifierDiscriminatorField === null
