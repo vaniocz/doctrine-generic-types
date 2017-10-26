@@ -15,6 +15,19 @@ class ClassMetadata extends ClassMetadataInfo
     /** @var string|null */
     public $identifierDiscriminatorField;
 
+    public function getSingleIdentifierFieldName(): string
+    {
+        $i = 0;
+
+        if ($this->identifierDiscriminatorField && count($this->identifier) === 2) {
+            $i = $this->identifierDiscriminatorField === $this->identifier[0] ? 1 : 0;
+        } elseif ($this->isIdentifierComposite) {
+            throw MappingException::singleIdNotAllowedOnCompositePrimaryKey($this->name);
+        }
+
+        return $this->identifier[$i];
+    }
+
     public function setIdentifier(array $identifier)
     {
         parent::setIdentifier($identifier);
