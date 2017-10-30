@@ -13,18 +13,22 @@ if (!is_readable($patchedFile)) {
             $count = is_array($value) ? count($value) : 1;
     
             if (count($columns) !== $count && isset($this->class->associationMappings[$field])) {
-                $targetMetadata = $this->em->getClassMetadata($this->class->associationMappings[$field]["targetEntity"]);
-    
-                if ($targetMetadata->identifierDiscriminatorField !== null) {
-                    foreach ($this->class->associationMappings[$field]["joinColumns"] as $joinColumn) {
-                        if ($joinColumn["referencedColumnName"] === $targetMetadata->discriminatorColumn["name"]) {
-                            $column = sprintf(
-                                "%s.%s",
-                                $this->getSQLTableAlias($this->class->name),
-                                $this->quoteStrategy->getJoinColumnName($joinColumn, $this->class, $this->platform)
-                            );
-                            $columns = array_diff($columns, [$column]);
-                            break;
+                $targetEntity = $this->class->associationMappings[$field]["targetEntity"];
+                
+                if (!$value instanceof $targetEntity) {
+                    $targetMetadata = $this->em->getClassMetadata($targetEntity);
+        
+                    if ($targetMetadata->identifierDiscriminatorField !== null) {
+                        foreach ($this->class->associationMappings[$field]["joinColumns"] as $joinColumn) {
+                            if ($joinColumn["referencedColumnName"] === $targetMetadata->discriminatorColumn["name"]) {
+                                $column = sprintf(
+                                    "%s.%s",
+                                    $this->getSQLTableAlias($this->class->name),
+                                    $this->quoteStrategy->getJoinColumnName($joinColumn, $this->class, $this->platform)
+                                );
+                                $columns = array_diff($columns, [$column]);
+                                break;
+                            }
                         }
                     }
                 }
