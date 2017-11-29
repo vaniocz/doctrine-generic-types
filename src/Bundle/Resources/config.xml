@@ -12,7 +12,7 @@
     <services>
         <service id="vanio_doctrine_generic_types.orm.guess_types_on_load_metadata" class="%vanio_doctrine_generic_types.orm.guess_types_on_load_metadata.class%" public="false">
             <argument type="service" id="vanio_doctrine_generic_types.orm.type_guesser_chain"/>
-            <tag name="doctrine.event_subscriber"/>
+            <tag name="doctrine.event_subscriber" priority="999"/>
         </service>
 
         <service id="vanio_doctrine_generic_types.orm.type_guesser_chain" class="%vanio_doctrine_generic_types.orm.type_guesser_chain.class%" public="false"/>
