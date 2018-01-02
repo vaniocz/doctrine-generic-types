@@ -26,6 +26,21 @@ if (!is_readable($patchedFile)) {
         ',
         $code
     );
+    $code = preg_replace(
+        '~function\s+getSingleIdentifierValue\s*\(.*\)\s*{~',
+        '
+            function getSingleIdentifierValue($entity)
+            {
+                $classMetadata = $this->em->getClassMetadata(get_class($entity));
+                $values = $this->isInIdentityMap($entity)
+                    ? $this->getEntityIdentifier($entity)
+                    : $classMetadata->getIdentifierValues($entity);
+                $idField = $classMetadata->getSingleIdentifierFieldName();
+            
+                return isset($values[$idField]) ? $values[$idField] : null;
+        ',
+        $code
+    );
 
     if (!@file_put_contents($patchedFile, $code)) {
         eval('?>' . $code);
