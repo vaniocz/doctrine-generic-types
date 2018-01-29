@@ -29,6 +29,11 @@ class ScalarObjectType extends AbstractType implements DataMapperInterface
             ]);
     }
 
+    public function finishView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['dataClass'] = $options['data_class'];
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
@@ -41,11 +46,6 @@ class ScalarObjectType extends AbstractType implements DataMapperInterface
             ->setAllowedTypes('type', ['string', 'null'])
             ->setAllowedTypes('options', 'array')
             ->setNormalizer('type', $this->typeNormalizer());
-    }
-
-    public function finishView(FormView $view, FormInterface $form, array $options)
-    {
-        $view->vars['dataClass'] = $options['data_class'];
     }
 
     /**
