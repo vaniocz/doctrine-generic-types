@@ -8,9 +8,52 @@ $patchedFile = sprintf('%s/UnitOfWork_%s_%s.php', sys_get_temp_dir(), md5(__DIR_
 
 if (!is_readable($patchedFile)) {
     $code = preg_replace(
+        '~function\s+addToIdentityMap\s*\(.*\)\s*{~',
+        '
+            function addToIdentityMap($entity)
+            {
+                $classMetadata = $this->em->getClassMetadata(get_class($entity));
+                $entityIdentifiers = $this->entityIdentifiers[spl_object_hash($entity)];
+                $idHash = implode(" ", $entityIdentifiers);
+
+                if ($idHash === "") {
+                    throw ORMInvalidArgumentException::entityWithoutIdentity($classMetadata->name, $entity);
+                }
+
+                $className = $classMetadata->rootEntityName;
+
+                if (isset($this->identityMap[$className][$idHash])) {
+                    return false;
+                }
+
+                $this->identityMap[$className][$idHash] = $entity;
+
+                if ($classMetadata->identifierDiscriminatorField && count($entityIdentifiers) === 2) {
+                    unset($entityIdentifiers[$classMetadata->identifierDiscriminatorField]);
+                    $this->identityMap[$className][(string) current($entityIdentifiers)] = $entity;
+                }
+
+                return true;
+        ',
+        file_get_contents($originalFile)
+    );
+    $code = preg_replace(
+        '~\$this->identityMap\[\$class->rootEntityName\]\[\$idHash\]\s*=\s*\$entity~',
+        '
+            $this->identityMap[$class->rootEntityName][$idHash] = $entity;
+
+            if ($class->identifierDiscriminatorField && count($id) === 2) {
+                $singleId = $id;
+                unset($singleId[$class->identifierDiscriminatorField]);
+                $this->identityMap[$class->rootEntityName][(string) current($id)] = $entity;
+            }
+        ',
+        $code
+    );
+    $code = preg_replace(
         '~foreach\s*\(\$data\s*as\s*\$field\s*=>\s*\$value\)\s*{\s*if\s*\(isset\(\$class->fieldMappings\[\$field\]\)\)\s*{\s*\$class->reflFields\[\$field\]->setValue\(\$entity,\s*\$value\);\s*}\s*}~',
         '$class->populateEntity($entity, $data);',
-        file_get_contents($originalFile)
+        $code
     );
     $code = preg_replace(
         '~case\s*\(\$targetClass->subClasses\):.+?default:~s',
