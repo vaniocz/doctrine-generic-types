@@ -3,12 +3,13 @@ namespace Doctrine\DBAL\Platforms;
 
 use Vanio\DoctrineGenericTypes\Patches\ComposerUtility;
 
+$cacheDirectory = defined('VANIO_DOCTRINE_GENERIC_TYPES_CACHE_DIRECTORY')
+    ? VANIO_DOCTRINE_GENERIC_TYPES_CACHE_DIRECTORY
+    : sys_get_temp_dir();
 $originalFile = ComposerUtility::findClassFileUsingPsr0(PostgreSqlPlatform::class);
 $patchedFile = sprintf(
     '%s/%s_%s_%s.php',
-    defined('VANIO_DOCTRINE_GENERIC_TYPES_CACHE_DIRECTORY')
-        ? VANIO_DOCTRINE_GENERIC_TYPES_CACHE_DIRECTORY
-        : sys_get_temp_dir(),
+    $cacheDirectory,
     basename(__FILE__, '.php'),
     md5(__DIR__),
     filemtime($originalFile)
