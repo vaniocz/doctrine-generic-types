@@ -47,9 +47,9 @@ if (!is_readable($patchedFile)) {
         file_get_contents($originalFile)
     );
     $code = preg_replace(
-        '~\$this->identityMap\[\$class->rootEntityName\]\[\$idHash\]\s*=\s*\$entity~',
+        '~\$this->identityMap\[\$class->rootEntityName\]\[\$idHash\]\s*=\s*\$entity;~',
         '
-            $this->identityMap[$class->rootEntityName][$idHash] = $entity;
+            $0;
 
             if ($class->identifierDiscriminatorField && count($id) === 2) {
                 $singleId = $id;
