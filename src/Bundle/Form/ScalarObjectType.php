@@ -25,7 +25,7 @@ class ScalarObjectType extends AbstractType implements DataMapperInterface
             ->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'onPreSetData'])
             ->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'onPreSubmit'])
             ->add('value', $options['type'], $options['options'] + [
-                'required' => true,
+                'required' => $options['required'],
                 'label' => false,
             ]);
     }
