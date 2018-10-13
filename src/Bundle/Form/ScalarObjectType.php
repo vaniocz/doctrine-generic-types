@@ -32,7 +32,10 @@ class ScalarObjectType extends AbstractType implements DataMapperInterface
 
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['dataClass'] = $options['data_class'];
+        $view->vars += [
+            'dataClass' => $options['data_class'],
+            'nonCompoundWrapper' => true,
+        ];
     }
 
     public function configureOptions(OptionsResolver $resolver)
