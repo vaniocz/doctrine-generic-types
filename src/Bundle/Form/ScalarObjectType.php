@@ -26,6 +26,7 @@ class ScalarObjectType extends AbstractType implements DataMapperInterface
             ->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'onPreSubmit'])
             ->add('value', $options['type'], $options['options'] + [
                 'required' => $options['required'],
+                'error_bubbling' => true,
                 'label' => false,
             ]);
     }
@@ -122,7 +123,7 @@ class ScalarObjectType extends AbstractType implements DataMapperInterface
             ));
         }
 
-        switch ($dataClass::scalarType()) {
+        switch ($dataClass::{'scalarType'}()) {
             case ScalarObject::INTEGER:
                 return IntegerType::class;
             case ScalarObject::FLOAT:
