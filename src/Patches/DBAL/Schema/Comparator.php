@@ -6,7 +6,7 @@ use Vanio\DoctrineGenericTypes\Patches\ComposerUtility;
 $cacheDirectory = defined('VANIO_DOCTRINE_GENERIC_TYPES_CACHE_DIRECTORY')
     ? VANIO_DOCTRINE_GENERIC_TYPES_CACHE_DIRECTORY
     : sys_get_temp_dir();
-$originalFile = ComposerUtility::findClassFileUsingPsr0(Comparator::class);
+$originalFile = ComposerUtility::findClassFileUsingPsr(Comparator::class);
 $patchedFile = sprintf(
     '%s/%s_%s_%s.php',
     $cacheDirectory,
@@ -38,3 +38,7 @@ if (!is_readable($patchedFile)) {
 }
 
 require $patchedFile;
+
+__halt_compiler();
+class Comparator
+{}

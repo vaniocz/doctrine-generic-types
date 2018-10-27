@@ -8,8 +8,8 @@
         {"name": "Marek Štípek", "email": "marek.stipek@vanio.cz"}
     ],
     "require": {
-        "php": "^7.0",
-        "doctrine/orm": "~2.5",
+        "php": "^7.1",
+        "doctrine/orm": "~2.6",
         "doctrine/annotations": "^1.0",
         "vanio/stdlib": "~0.1@dev",
         "vanio/type-parser": "^0.1@dev"
@@ -21,12 +21,8 @@
         "vanio/coding-standards": "^0.1@dev"
     },
     "autoload": {
-        "psr-0": {
-            "Doctrine\\Common\\Annotations\\": "vendor/doctrine/annotations/lib/"
-        },
+        "classmap": ["src/Patches"],
         "psr-4": {
-            "Doctrine\\": "src/Patches/",
-            "Doctrine\\Common\\Annotations\\": "src/Patches/Common/Annotations/",
             "Vanio\\DoctrineGenericTypes\\": "src/"
         },
         "exclude-from-classmap": ["/tests/"]
@@ -41,7 +37,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.1.x-dev"
+            "dev-master": "0.2.x-dev"
         }
     }
 }

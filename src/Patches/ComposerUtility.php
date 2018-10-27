@@ -3,27 +3,27 @@ namespace Vanio\DoctrineGenericTypes\Patches;
 
 use Composer\Autoload\ClassLoader;
 use Symfony\Component\Debug\DebugClassLoader;
+use Vanio\Stdlib\Objects;
 
 class ComposerUtility
 {
-    /** @var string[] */
-    public static $psr4Paths = [];
-
     /**
      * Finds a file using PSR0 while resetting composer PSR4 prefix this patch was loaded by.
      *
      * @throws \LogicException
      */
-    public static function findClassFileUsingPsr0(string $class): string
+    public static function findClassFileUsingPsr(string $class): string
     {
-        self::resetPsr4('Doctrine\\');
-        self::resetPsr4('Doctrine\\Common\\Annotations\\');
+        $classLoader = self::classLoader();
+        $originalClassMap = $classLoader->getClassMap();
+        $classMap = &Objects::getPropertyValue($classLoader, 'classMap', ClassLoader::class);
+        $classMap = [];
 
         if (!$file = self::classLoader()->findFile($class)) {
             throw new \LogicException(sprintf('The class "%s" file was not found.', $class));
         }
 
-        self::restorePsr4();
+        $classMap = $originalClassMap;
 
         return $file;
     }
@@ -56,21 +56,5 @@ class ComposerUtility
         }
 
         throw new \LogicException('Composer autoloader must be registered.');
-    }
-
-    private static function resetPsr4(string $prefix)
-    {
-        $classLoader = self::classLoader();
-        self::$psr4Paths[$prefix] = $classLoader->getPrefixesPsr4()[$prefix] ?? [];
-        $classLoader->setPsr4($prefix, []);
-    }
-
-    private static function restorePsr4()
-    {
-        $classLoader = self::classLoader();
-
-        foreach (self::$psr4Paths as $prefix => $path) {
-            $classLoader->setPsr4($prefix, $path);
-        }
     }
 }
