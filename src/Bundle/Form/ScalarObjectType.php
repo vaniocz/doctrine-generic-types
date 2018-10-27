@@ -23,15 +23,20 @@ class ScalarObjectType extends AbstractType implements DataMapperInterface
         $builder
             ->setDataMapper($this)
             ->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'onPreSetData'])
+            ->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'onPreSubmit'])
             ->add('value', $options['type'], $options['options'] + [
-                'required' => true,
+                'required' => $options['required'],
+                'error_bubbling' => true,
                 'label' => false,
             ]);
     }
 
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['dataClass'] = $options['data_class'];
+        $view->vars += [
+            'dataClass' => $options['data_class'],
+            'nonCompoundWrapper' => true,
+        ];
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -42,6 +47,7 @@ class ScalarObjectType extends AbstractType implements DataMapperInterface
                 'error_bubbling' => false,
                 'type' => null,
                 'options' => [],
+                'documentation' => ['type' => 'string']
             ])
             ->setAllowedTypes('type', ['string', 'null'])
             ->setAllowedTypes('options', 'array')
@@ -55,20 +61,17 @@ class ScalarObjectType extends AbstractType implements DataMapperInterface
     public function mapDataToForms($data, $forms)
     {
         $forms = iterator_to_array($forms);
-        /** @var FormInterface $form */
-        $form = reset($forms);
-        $form->setData($data instanceof ScalarObject ? $data->scalarValue() : null);
+        $forms['value']->setData($data instanceof ScalarObject ? $data->scalarValue() : null);
     }
 
     /**
-     * @param \RecursiveIteratorIterator|FormInterface[] $forms
+     * @param \Iterator|FormInterface[] $forms
      * @param mixed $data
      */
     public function mapFormsToData($forms, &$data)
     {
         $forms = iterator_to_array($forms);
-        /** @var FormInterface $form */
-        $form = reset($forms);
+        $form = $forms['value'];
         $class = $form->getParent()->getConfig()->getOption('data_class');
         $data = $form->getData() !== null || $form->getParent()->isRequired()
             ? $this->createScalarObject($class, $form->getData())
@@ -85,6 +88,18 @@ class ScalarObjectType extends AbstractType implements DataMapperInterface
 
         if ($data !== null && !$data instanceof ScalarObject) {
             $event->setData($this->createScalarObject($class, $data));
+        }
+    }
+
+    /**
+     * @internal
+     */
+    public function onPreSubmit(FormEvent $event)
+    {
+        $data = $event->getData();
+
+        if (is_scalar($data) || $data === null) {
+            $event->setData(['value' => $data]);
         }
     }
 
@@ -108,7 +123,7 @@ class ScalarObjectType extends AbstractType implements DataMapperInterface
             ));
         }
 
-        switch ($dataClass::scalarType()) {
+        switch ($dataClass::{'scalarType'}()) {
             case ScalarObject::INTEGER:
                 return IntegerType::class;
             case ScalarObject::FLOAT:
