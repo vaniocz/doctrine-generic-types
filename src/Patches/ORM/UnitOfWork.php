@@ -47,6 +47,38 @@ if (!is_readable($patchedFile)) {
         file_get_contents($originalFile)
     );
     $code = preg_replace(
+        '~function\s+removeFromIdentityMap\s*\(.*\)\s*{~',
+        '
+            function removeFromIdentityMap($entity)
+            {
+                $entityHash = spl_object_hash($entity);
+                $entityIdentifiers = $this->entityIdentifiers[$entityHash];
+                $idHash = implode(" ", $entityIdentifiers);
+        
+                if ($idHash === "") {
+                    throw ORMInvalidArgumentException::entityHasNoIdentity($entity, "remove from identity map");
+                }
+        
+                $classMetadata = $this->em->getClassMetadata(get_class($entity));
+                $className = $classMetadata->rootEntityName;
+
+                if (isset($this->identityMap[$className][$idHash])) {
+                    unset($this->identityMap[$className][$idHash]);
+                    unset($this->readOnlyObjects[$entityHash]);
+
+                    if ($classMetadata->identifierDiscriminatorField && count($entityIdentifiers) === 2) {
+                        unset($entityIdentifiers[$classMetadata->identifierDiscriminatorField]);
+                        unset($this->identityMap[$className][(string) current($entityIdentifiers)]);
+                    }
+        
+                    return true;
+                }
+        
+                return false;
+        ',
+        $code
+    );
+    $code = preg_replace(
         '~\$this->identityMap\[\$class->rootEntityName\]\[\$idHash\]\s*=\s*\$entity;~',
         '
             $0;
