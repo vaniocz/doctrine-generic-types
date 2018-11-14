@@ -15,6 +15,8 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vanio\DoctrineGenericTypes\DBAL\ScalarObject;
+use Vanio\DomainBundle\Assert\ValidationException;
+use Vanio\Stdlib\Enum;
 
 class ScalarObjectType extends AbstractType implements DataMapperInterface
 {
@@ -73,9 +75,23 @@ class ScalarObjectType extends AbstractType implements DataMapperInterface
         $forms = iterator_to_array($forms);
         $form = $forms['value'];
         $class = $form->getParent()->getConfig()->getOption('data_class');
-        $data = $form->getData() !== null || $form->getParent()->isRequired()
-            ? $this->createScalarObject($class, $form->getData())
-            : null;
+
+        if ($form->getData() === null && !$form->getParent()->isRequired()) {
+            $data = null;
+
+            return;
+        }
+
+        try {
+            $data = $this->createScalarObject($class, $form->getData());
+        } catch (\InvalidArgumentException $e) {
+            if (class_exists(ValidationException::class) && is_subclass_of($class, Enum::class, true)) {
+                $messageTemplate = 'Value {{ value }} is not within allowed values.';
+                throw new ValidationException($messageTemplate, 0, null, $form->getData());
+            } else {
+                throw $e;
+            }
+        }
     }
 
     /**
