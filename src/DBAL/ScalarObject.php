@@ -4,9 +4,9 @@ namespace Vanio\DoctrineGenericTypes\DBAL;
 interface ScalarObject
 {
     const STRING = 'string';
-    const INTEGER = 'int';
+    const INTEGER = 'integer';
     const FLOAT = 'float';
-    const BOOLEAN = 'bool';
+    const BOOLEAN = 'boolean';
 
     static function scalarType(): string;
 
