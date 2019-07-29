@@ -114,7 +114,17 @@ class ClassMetadata extends ClassMetadataInfo
             return false;
         }
 
-        return ($this->embeddedClasses[$property]['nullable'] ?? false) !== true;
+        $propertyPath = '';
+
+        foreach (explode('.', $property) as $p) {
+            $propertyPath = $propertyPath === '' ? $p : "{$propertyPath}.$p";
+
+            if (($this->embeddedClasses[$propertyPath]['nullable'] ?? false) === true) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private function assignIdentifierDiscriminatorField()
