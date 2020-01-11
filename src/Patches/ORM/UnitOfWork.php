@@ -97,6 +97,22 @@ if (!is_readable($patchedFile)) {
         $code
     );
     $code = preg_replace(
+        '~\$this->originalEntityData\[\$oid\]\[\$field\]\s*=\s*\$data\[\$field\];\s+continue;~',
+        '
+            $this->originalEntityData[$oid][$field] = $data[$field];
+            break;
+        ',
+        $code
+    );
+    $code = preg_replace(
+        '~\$this->originalEntityData\[\$oid\]\[\$field\]\s*=\s*null;\s+continue;~',
+        '
+            $this->originalEntityData[$oid][$field] = null;
+            break;
+        ',
+        $code
+    );
+    $code = preg_replace(
         '~case\s*\(\$targetClass->subClasses\):.+?default:~s',
         '
             case ($targetClass->subClasses):
