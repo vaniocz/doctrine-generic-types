@@ -49,6 +49,8 @@ class ScalarObjectType extends GenericType
                 return $platform->getIntegerTypeDeclarationSQL($fieldDeclaration);
             case ScalarObject::FLOAT:
                 return $platform->getFloatDeclarationSQL($fieldDeclaration);
+            case ScalarObject::CITEXT:
+                return ScalarObject::CITEXT;
         }
 
         return $platform->getClobTypeDeclarationSQL($fieldDeclaration);

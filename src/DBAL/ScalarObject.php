@@ -7,6 +7,7 @@ interface ScalarObject
     const INTEGER = 'integer';
     const FLOAT = 'float';
     const BOOLEAN = 'boolean';
+    const CITEXT = 'citext';
 
     static function scalarType(): string;
 
