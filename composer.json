@@ -9,8 +9,8 @@
     ],
     "require": {
         "php": ">=7.1",
-        "doctrine/orm": "~2.6.2",
-        "doctrine/dbal": "~2.6.2",
+        "doctrine/orm": "^2.6",
+        "doctrine/dbal": "^2.6",
         "doctrine/annotations": "^1.0",
         "vanio/stdlib": "~0.1@dev",
         "vanio/type-parser": "^0.1@dev"
