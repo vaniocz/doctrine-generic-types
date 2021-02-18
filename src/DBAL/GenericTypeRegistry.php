@@ -26,14 +26,15 @@ class GenericTypeRegistry implements \ArrayAccess
             return;
         }
 
-        $types = &Objects::getPropertyValue(Type::class, '_typeObjects', Type::class);
+//        $types = &Objects::getPropertyValue(Type::class, '_typeObjects', Type::class);
+        $types = Type::getTypeRegistry();
 
         if ($types instanceof self) {
             $this->types = $types->types;
         } else {
             $this->types = [];
 
-            foreach ($types as $name => $type) {
+            foreach ($types->getMap() as $name => $type) {
                 $this->addType($type);
             }
         }
