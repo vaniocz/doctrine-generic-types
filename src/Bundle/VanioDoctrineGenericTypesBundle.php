@@ -16,6 +16,6 @@ class VanioDoctrineGenericTypesBundle extends Bundle
     public function boot()
     {
         /** @noinspection PhpInternalEntityUsedInspection */
-        (new GenericTypeRegistry)->register();
+        (new GenericTypeRegistry)->hook();
     }
 }

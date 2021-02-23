@@ -1,18 +1,22 @@
 <?php
 namespace Vanio\DoctrineGenericTypes\DBAL;
 
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\TypeRegistry;
 use Vanio\Stdlib\Objects;
 
 /**
- * A registry of types replacing the Doctrine internal flyweight system.
+ * A registry of types decorating the Doctrine internal TypeRegistry.
  * @internal
  */
-class GenericTypeRegistry implements \ArrayAccess
+class GenericTypeRegistry
 {
-    /** @var array|null */
-    private $types;
+    /** @var TypeRegistry|null */
+    private $typeRegistry;
+
+    /** @var string[] */
+    private $genericTypes = [];
 
     /** @var bool */
     private $removing = false;
@@ -20,60 +24,47 @@ class GenericTypeRegistry implements \ArrayAccess
     /**
      * Register itself, hook into Doctrine flyweight system.
      */
-    public function register()
+    public function hook()
     {
-        if ($this->types !== null) {
+        if ($this->typeRegistry !== null) {
             return;
         }
 
-//        $types = &Objects::getPropertyValue(Type::class, '_typeObjects', Type::class);
-        $types = Type::getTypeRegistry();
+        $typeRegistry = Type::getTypeRegistry();
 
-        if ($types instanceof self) {
-            $this->types = $types->types;
-        } else {
-            $this->types = [];
+        if (!$typeRegistry instanceof self) {
+            $this->genericTypes = [];
+            $this->typeRegistry = $typeRegistry;
 
-            foreach ($types->getMap() as $name => $type) {
-                $this->addType($type);
-            }
+            Objects::setPropertyValue(Type::class, 'typeRegistry', $this, Type::class);
         }
-
-        $types = $this;
     }
 
     /**
-     * Get an instance of the given type name
+     * Finds a type by the given name.
      *
-     * @throws DBALException
+     * @throws Exception
      */
-    public function getType(string $type): Type
+    public function get(string $type): Type
     {
-        if (isset($this->types[$type])) {
-            return $this->types[$type];
+        try {
+            $instance = $this->typeRegistry->get($type);
+        } catch (Exception $e) {
+            $instance = $this->createType($type);
+            $this->register($type, $instance);
         }
-
-        $instance = $this->createType($type);
-        $this->addType($instance);
-        $this->types[$type] = $instance;
 
         return $instance;
     }
 
     /**
-     * Register the given type instance
+     * Finds a name for the given type.
      *
-     * @throws DBALException
+     * @throws Exception
      */
-    public function addType(Type $type)
+    public function lookupName(Type $type): string
     {
-        $name = $type->getName();
-
-        if (!Type::hasType($name)) {
-            Type::addType($name, get_class($type));
-        }
-
-        $this->types[$name] = $type;
+        return $this->typeRegistry->lookupName($type);
     }
 
     /**
@@ -87,78 +78,68 @@ class GenericTypeRegistry implements \ArrayAccess
         }
 
         $this->removing = false;
-        unset($this->types[$type]);
     }
 
     /**
-     * Return true so doctrine always delegates creation of the type.
-     *
-     * @param string $type
-     * @return bool
+     * Checks if there is a type of the given name.
      */
-    public function offsetExists($type): bool
+    public function has(string $name): bool
     {
-        return true;
+        return $this->typeRegistry->has($name);
     }
 
     /**
-     * Get an instance of the given type name
+     * Registers a custom type to the type map.
      *
-     * @param string $type
-     * @return Type
-     * @throws DBALException
+     * @throws Exception
      */
-    public function offsetGet($type): Type
+    public function register(string $name, Type $type): void
     {
-        return $this->getType($type);
+        if (is_a($type, GenericType::class, true)) {
+            $this->genericTypes[$name] = $type::class;
+        } else {
+            $this->typeRegistry->register($name, $type);
+        }
     }
 
     /**
-     * Register the given type instance
+     * Overrides an already defined type to use a different implementation.
      *
-     * @param string $name not used
-     * @param Type $type
-     * @throws DBALException
+     * @throws Exception
      */
-    public function offsetSet($name, $type)
+    public function override(string $name, Type $type)
     {
-        $this->addType($type);
+        $this->typeRegistry->override($name, $type);
     }
 
     /**
-     * Unregister the given type
+     * Gets the map of all registered types and their corresponding type instances.
      *
-     * @param string $type
+     * @internal
+     *
+     * @return array<string, Type>
      */
-    public function offsetUnset($type)
+    public function getMap(): array
     {
-        $this->removeType($type);
+        return $this->typeRegistry->getMap();
     }
 
     /**
-     * @throws DBALException
+     * @throws Exception
      */
     private function createType(string $type): Type
     {
-        $typeParameters = [];
+        list($type, $typeParameters) = $this->resolveTypeParameters($type);
 
-        if (!$class = Type::getTypesMap()[$type] ?? null) {
-            list($type, $typeParameters) = $this->resolveTypeParameters($type);
-
-            if (!$class = Type::getTypesMap()[$type] ?? null) {
-                throw DBALException::unknownColumnType($type);
-            }
+        if ($class = $this->genericTypes[$type] ?? null) {
+            return $class::{'create'}(...$typeParameters);
+        } elseif ($class = Type::getTypesMap()[$type] ?? null) {
+            return (new \ReflectionClass($class))->newInstanceWithoutConstructor();
         }
 
-        return is_a($class, GenericType::class, true)
-            ? $class::{'create'}(...$typeParameters)
-            : (new \ReflectionClass($class))->newInstanceWithoutConstructor();
+        throw Exception::unknownColumnType($type);
     }
 
-    /**
-     * @param string $type
-     * @return array
-     */
     private function resolveTypeParameters(string $type): array
     {
         list($type, $typeParametersLiteral) = explode('<', $type, 2) + [1 => null];
