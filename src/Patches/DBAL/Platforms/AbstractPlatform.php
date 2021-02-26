@@ -31,23 +31,23 @@ if (!is_readable($patchedFile)) {
         file_get_contents($originalFile)
     );
 
-    $code = preg_replace(
-        '~function\s+isCommentedDoctrineType\s*\(.*\)\s*{~',
-        '
-            function isCommentedDoctrineType(\Doctrine\DBAL\Types\Type $doctrineType)
-            {
-                if ($this->doctrineTypeComments === null) {
-                    $this->initializeCommentedDoctrineTypes();
-                }
-
-                $typeName = $doctrineType instanceof \Vanio\DoctrineGenericTypes\DBAL\GenericType
-                    ? $doctrineType->name()
-                    : $doctrineType->getName();
-
-                return in_array($typeName, $this->doctrineTypeComments);
-        ',
-        $code
-    );
+//    $code = preg_replace(
+//        '~function\s+isCommentedDoctrineType\s*\(.*\)\s*{~',
+//        '
+//            function isCommentedDoctrineType(\Doctrine\DBAL\Types\Type $doctrineType)
+//            {
+//                if ($this->doctrineTypeComments === null) {
+//                    $this->initializeCommentedDoctrineTypes();
+//                }
+//
+//                $typeName = $doctrineType instanceof \Vanio\DoctrineGenericTypes\DBAL\GenericType
+//                    ? $doctrineType->name()
+//                    : $doctrineType->getName();
+//
+//                return in_array($typeName, $this->doctrineTypeComments);
+//        ',
+//        $code
+//    );
     @mkdir($cacheDirectory, 0777, true);
 
     if (!@file_put_contents($patchedFile, $code)) {

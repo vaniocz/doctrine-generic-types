@@ -51,7 +51,7 @@ class GenericTypeRegistry
             $instance = $this->typeRegistry->get($type);
         } catch (Exception $e) {
             $instance = $this->createType($type);
-            $this->register($type, $instance);
+            $this->typeRegistry->register($type, $instance);
         }
 
         return $instance;
