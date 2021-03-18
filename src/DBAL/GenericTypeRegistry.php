@@ -109,7 +109,11 @@ class GenericTypeRegistry
      */
     public function override(string $name, Type $type)
     {
-        $this->typeRegistry->override($name, $type);
+        if (is_a($type, GenericType::class, true)) {
+            $this->genericTypes[$name] = $type::class;
+        } else {
+            $this->typeRegistry->override($name, $type);
+        }
     }
 
     /**
